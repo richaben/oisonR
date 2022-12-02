@@ -39,7 +39,8 @@ rm(selection_zone)
 
 ## -> collecte des donnees sur polygone defini manuellement
 
-test_zone <- "POLYGON ((410677.9 6877209, 413275.2 6929083, 496961.8 6925506, 495122.6 6873600, 410677.9 6877209))"
+test_zone <-
+"POLYGON ((410677.9 6877209, 413275.2 6929083, 496961.8 6925506, 495122.6 6873600, 410677.9 6877209))"
 
 get_data_polygon(zone_selection = test_zone,
                  login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp",

@@ -4,7 +4,6 @@
 #' @export
 #'
 #' @importFrom cli cli_alert_success
-#' @importFrom emo ji
 #' @importFrom geojsonsf geojson_sf
 #' @importFrom jsonify to_json
 #' @importFrom leaflet leafletOutput renderLeaflet leaflet setView addProviderTiles addTiles WMSTileOptions providerTileOptions addLayersControl layersControlOptions addScaleBar filterNULL
@@ -39,9 +38,7 @@ outil_selection_zone <- function() {
                           width = 200,
                           shiny::h4("Comment utiliser cet outil de s\u00e9lection ?"),
                           shiny::p(
-                            "1\u00b0) Localiser l\'endroit souhait\u00e9 ! (\u00e0 la souris, avec les +/-, ou avec la recherche",
-                            emo::ji("mag"),
-                            ");"
+                            "1\u00b0) Localiser l\'endroit souhait\u00e9 ! (\u00e0 la souris, avec les +/-, ou avec la recherche );"
                           ),
                           shiny::p(
                             "2\u00b0) S\u00e9lectionner un outil pour tracer la zone (soit polygone ou rectangle);"
@@ -51,8 +48,8 @@ outil_selection_zone <- function() {
                             "4\u00b0) Valider pour sauvegarder la s\u00e9lection dans l\'environnement !"
                           ),
                           shiny::h5(
-                            shiny::em("Et c\'est pr\u00eat \u00e0 \u00eatre utiliser pour la requ\u00eate OISON"),
-                            emo::ji("wink")
+                            shiny::em("Et c\'est pr\u00eat \u00e0 \u00eatre utiliser pour la requ\u00eate OISON")
+
                           )
                         ))
   )

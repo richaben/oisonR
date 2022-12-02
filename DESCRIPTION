@@ -24,7 +24,6 @@ Imports:
     tibble, 
     tidyr, 
     tidyselect,
-    emo, 
     geojsonsf, 
     jsonify, 
     leaflet, 
