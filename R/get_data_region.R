@@ -23,12 +23,12 @@
 #'
 #' # -> consulter le nombre de données dans la région Île-de-France (code region 11)
 #'
-#' get_data_dpt(dpt_code = "11", login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp")
+#' get_data_region(region_code = "11", login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp")
 #'
 #' #' # -> télécharger les données dans la région Île-de-France (code region 11)
 #'
 #' obs_regIDF <-
-#' get_data_dpt(dpt_code = "11", login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp", collect_all = T)
+#' get_data_region(region_code = "11", login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp", collect_all = T)
 #' }
 #'
 
