@@ -132,7 +132,9 @@ get_data_dpt <- function(dpt_code, login, mdp, collect_all = FALSE) {
     if(collect_all == F) {
       cli::cli_alert_info("Total observations en base : {totalcount}.")
       data.frame(code_departement = dpt_code, total_obs = totalcount) }
-    else {
+    else if(totalcount == 0){
+      cli::cli_warn("Pas de données à télécharger.")
+    } else {
 
     ## Recup donnees limitees (< 2500 obs)
     ## -> utilise la fonction pour creer min/max valeurs requete

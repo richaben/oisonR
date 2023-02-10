@@ -1,6 +1,6 @@
 #' Consulter et Télécharger les données OISON pour une région
 #'
-#' @param region_code code INSEE de la région (ex. 28 pour la Normandie)
+#' @param region_code Code INSEE de la région (ex. 28 pour la Normandie)
 #' @param login login du compte
 #' @param mdp mot de passe associé au compte
 #' @param collect_all Booléen. Si FALSE (par défaut) consultation du nombre d'observation (FALSE), si TRUE télécharge les données.
@@ -28,7 +28,10 @@
 #' #' # -> télécharger les données dans la région Île-de-France (code region 11)
 #'
 #' obs_regIDF <-
-#' get_data_region(region_code = "11", login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp", collect_all = T)
+#' get_data_region(region_code = "11",
+#' login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp",
+#' collect_all = T)
+#'
 #' }
 #'
 
@@ -133,6 +136,8 @@ get_data_region <- function(region_code, login, mdp, collect_all = FALSE) {
     if(collect_all == F) {
       cli::cli_alert_info("Total observations en base : {totalcount}.")
       data.frame(code_region = region_code, total_obs = totalcount) }
+    else if(totalcount == 0){
+      cli::cli_warn("Pas de données à télécharger.") }
     else {
 
     ## Recup donnees limitees (< 2500 obs)

@@ -6,7 +6,7 @@
 #' @description  L'api semble limitée en nombre d'observation possible à récupérer.
 #'     Nécessaire de récupérer en plusieurs fois.
 #'     La fonction sert à générer les min et max à inclure les requêtes individuelles.
-#'     Les min/max sont créer en fonction du nombre total d'observations, à pas de 5000 observations.
+#'     Les min/max sont créer en fonction du nombre total d'observations, à pas de 1000 observations.
 #'
 #' @param totalcount Nombre total d'observation
 #'
@@ -219,11 +219,15 @@ extract_requete <- function(requete_df) {
 
   left_join(part_base,recensementTaxon) %>%
     left_join(part_localisation) %>%
-    suppressMessages()
+    suppressMessages() %>%
+    dplyr::mutate(cd_ref = as.numeric(cd_ref),
+                  parentCode = as.numeric(parentCode))
 }
 
 
-
+###############################################################################
+###############################################################################
+###############################################################################
 
 #' Export et mise en forme des resultats
 #'

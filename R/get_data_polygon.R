@@ -5,7 +5,6 @@
 #' @param mdp mot de passe associé au compte
 #' @param collect_all Booléen. Si FALSE (par défaut) consultation du nombre d'observation (FALSE), si TRUE télécharge les données.
 #' @param draw_zone Booléen. Si TRUE, lance l'outil de sélection de zones. Par défaut, FALSE.
-#' @param ...
 #'
 #' @return Si collect_all=FALSE, retourne un dataframe avec le polygone et le nombre d'observation dans celui-ci.
 #' Si collect_all=T, retourne un dataframe avec les observations.
@@ -26,7 +25,8 @@
 #' ## -> collecte des donnees sur polygone defini manuellement
 #'
 #' test_zone <-
-#' "POLYGON ((410677.9 6877209, 413275.2 6929083, 496961.8 6925506, 495122.6 6873600, 410677.9 6877209))"
+#' "POLYGON ((410677.9 6877209, 413275.2 6929083,
+#' 496961.8 6925506, 495122.6 6873600, 410677.9 6877209))"
 #'
 #' get_data_polygon(zone_selection = test_zone,
 #'                  login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp",
@@ -50,12 +50,12 @@
 #' }
 #'
 
-get_data_polygon <- function(zone_selection, login, mdp, collect_all = FALSE, draw_zone = FALSE,...){
+get_data_polygon <- function(zone_selection, login, mdp, collect_all = FALSE, draw_zone = FALSE){
 
   if(missing(zone_selection) & exists("selection_zone") == TRUE & draw_zone == FALSE){
-    cli::cli_alert_warning("Un object 'selection_zone' existe déjà dans l'environnement.
-                           Il sera utilisé pour récupérer les données.
-                           Relancez-la fonction 'outil_selection_zone()' pour une nouvelle sélection.")
+    cli::cli_alert_warning("Un object 'selection_zone' existe d\u00e9j\u00e0 dans l\'environnement.
+                           Il sera utilis\u00e9 pour r\u00e9cupérer les donn\u00e9es.
+                           Relancez-la fonction 'outil_selection_zone()' pour une nouvelle s\u00e9lection.")
 
     zone_selection <- selection_zone
 
@@ -143,6 +143,8 @@ get_data_polygon <- function(zone_selection, login, mdp, collect_all = FALSE, dr
     if(collect_all == F) {
       cli::cli_alert_info("Total observations en base : {totalcount}.")
       data.frame(zone_selection = zone_selection, total_obs = totalcount) }
+    else if(totalcount == 0){
+      cli::cli_warn("Pas de données à télécharger.") }
     else {
 
       ## Recup donnees limitees (< 2500 obs)

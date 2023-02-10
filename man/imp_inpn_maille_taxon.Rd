@@ -20,7 +20,8 @@ Récupération des mailles 10x10km sur l'INPN sur une zone shape
 \examples{
 \dontrun{
 
-data_oison <- get_data_dpt(dpt_code = "27", login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp")
+data_oison <- get_data_dpt(dpt_code = "27",
+login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp")
 
 normandie_shp <-
 readRDS(file = './regions_geo_normandie.rds') \%>\%

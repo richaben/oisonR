@@ -5,13 +5,14 @@ Version: 0.1.0
 Author: Benoit Richard <benoit.richard@ofb.gouv.fr>
 Maintainer: Benoit Richard <benoit.richard@ofb.gouv.fr>
 Description: Ensemble de fonctions pour utiliser les données bancarisées sur OISON, 
-    l'application pour les saisies opportunistes de l'OFB.
+    l'application pour les saisies opportunistes de l'Office français 
+    de la biodiversité (OFB).
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/richaben/oisonR
 BugReports: https://github.com/richaben/oisonR/issues
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Imports: 
     magrittr,
     cli, 
@@ -31,4 +32,7 @@ Imports:
     leaflet, 
     leaflet.extras, 
     sf,
-    shiny
+    shiny,
+    rvest
+Suggests: 
+    rtaxref

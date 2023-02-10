@@ -167,5 +167,5 @@ outil_selection_zone <- function() {
 
   app <- shiny::shinyApp(ui, server)
 
-  shiny::runApp(app, quiet = T)
+  shiny::runApp(app, quiet = T, launch.browser = T)
 }

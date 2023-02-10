@@ -1,3 +1,27 @@
+#' Récupération des codes Habitats des taxons sur l'INPN
+#'
+#' @param df un dataframe issu de la requete OISON
+#'
+#' @return un dataframe avec les codes habitats présents sur l'INPN
+#' @export
+#'
+#'
+#' @importFrom dplyr select mutate right_join n as_tibble
+#' @importFrom furrr future_map_dfr
+#' @importFrom glue glue
+#' @importFrom progressr with_progress progressor
+#' @importFrom purrr possibly
+#' @importFrom rvest read_html html_element html_table
+#'
+#' @examples
+#' \dontrun{
+#' data_oison <- get_data_dpt(dpt_code = "27",
+#' login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp")
+#'
+#' code_habitats <- imp_inpn_habitats_taxon(df = data_oison)
+#'
+#' }
+
 imp_inpn_habitats_taxon <- function(df){
 
   base_url_habitat <- "https://inpn.mnhn.fr/espece/cd_nom/{cd_ref}/tab/habitats"
@@ -37,9 +61,3 @@ imp_inpn_habitats_taxon <- function(df){
   })
 
 }
-
-#
-# rvest::read_html('https://inpn.mnhn.fr/espece/cd_nom/2895/tab/habitats') %>%
-#   rvest::html_element("#especes") %>%
-#   rvest::html_table() %>%
-#   dplyr::select(!!-c(1))
