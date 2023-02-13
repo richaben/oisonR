@@ -15,24 +15,24 @@ BugReports: https://github.com/richaben/oisonR/issues
 RoxygenNote: 7.2.3
 Imports: 
     magrittr,
-    cli, 
-    dplyr, 
-    glue, 
-    httr, 
-    jsonlite, 
+    cli,
+    dplyr,
+    glue,
+    httr,
+    jsonlite,
     progress,
     progressr,
     purrr,
     furrr,
-    tibble, 
-    tidyr, 
+    tibble,
+    tidyr,
     tidyselect,
-    geojsonsf, 
-    jsonify, 
-    leaflet, 
-    leaflet.extras, 
+    jsonify,
+    leaflet,
+    leaflet.extras,
     sf,
     shiny,
-    rvest
+    rvest,
+    geojsonsf
 Suggests: 
     rtaxref
