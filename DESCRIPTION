@@ -1,38 +1,36 @@
-Package: oisonR
 Type: Package
+Package: oisonR
 Title: R Package pour collecter et utiliser les données OISON
 Version: 0.1.0
 Author: Benoit Richard <benoit.richard@ofb.gouv.fr>
 Maintainer: Benoit Richard <benoit.richard@ofb.gouv.fr>
-Description: Ensemble de fonctions pour utiliser les données bancarisées sur OISON, 
-    l'application pour les saisies opportunistes de l'Office français 
-    de la biodiversité (OFB).
+Description: Ensemble de fonctions pour utiliser les données bancarisées
+    sur OISON, l'application pour les saisies opportunistes de l'Office
+    français de la biodiversité (OFB).
 License: GPL (>= 3)
-Encoding: UTF-8
-LazyData: true
 URL: https://github.com/richaben/oisonR
 BugReports: https://github.com/richaben/oisonR/issues
-RoxygenNote: 7.2.3
 Imports: 
-    magrittr,
     cli,
     dplyr,
+    furrr,
+    geojsonsf,
     glue,
     httr,
+    jsonify,
     jsonlite,
+    leaflet,
+    leaflet.extras,
+    magrittr,
     progress,
     progressr,
     purrr,
-    furrr,
-    tibble,
-    tidyr,
-    tidyselect,
-    jsonify,
-    leaflet,
-    leaflet.extras,
+    rvest,
     sf,
     shiny,
-    rvest,
-    geojsonsf
-Suggests: 
-    rtaxref
+    tibble,
+    tidyr,
+    tidyselect
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
