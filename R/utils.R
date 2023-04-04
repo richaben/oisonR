@@ -1,4 +1,6 @@
-# Fonctions utiles
+####-----------------------------####
+### Fonctions utiles
+####-----------------------------####
 
 #' Tableau nombres min et max à requêter
 #'

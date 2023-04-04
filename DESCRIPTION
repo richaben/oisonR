@@ -28,6 +28,8 @@ Imports:
     rvest,
     sf,
     shiny,
+    stringi,
+    stringr,
     tibble,
     tidyr,
     tidyselect
