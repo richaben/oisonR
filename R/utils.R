@@ -210,8 +210,7 @@ extract_requete <- function(requete_df) {
                                        "region_nom",
                                        'region_code',
                                        "xPoint",
-                                       'yPoint',
-                                       'longueurTroncon'))) %>%
+                                       'yPoint'))) %>%
     suppressMessages()
 
   requete_df$items %>%

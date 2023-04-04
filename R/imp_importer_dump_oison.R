@@ -5,18 +5,22 @@
 #' @return L'ensemble des tables de la base (sauf tables 'mapping')
 #' @export
 #'
-#' @importFrom dplyr mutate arrange filter group_by mutate_all
+#' @importFrom dplyr mutate arrange filter group_by mutate_all pull
 #' @importFrom glue glue
 #' @importFrom purrr map reduce set_names
 #' @importFrom stringi stri_detect_fixed
 #' @importFrom stringr str_replace_all str_extract str_extract_all str_sub str_split
 #' @importFrom utils type.convert
+#' @importFrom progressr with_progress progressor
+#' @importFrom furrr future_map
+#' @importFrom cli cli_h1 cli_progress_step
 #'
 #' @examples
 #'
 #' \dontrun{
 #' imp_importer_dump_oison(fichier_dump = "./raw_data/PROD_oison.sql")
 #' }
+#'
 
 imp_importer_dump_oison <- function(fichier_dump) {
 
@@ -67,16 +71,26 @@ imp_importer_dump_oison <- function(fichier_dump) {
   # ------------------------------------------------------------
   # Extraction
   # ------------------------------------------------------------
+
+  cli::cli_h1(glue::glue(
+    "Extraction des tables du dump sql OISON"
+  ))
+
   # déclaration de noms de variables pour éviter des warnings en compilant le package
   tables_a_extraire <-
     index_ligne_debut <- index_ligne_fin <- nom_table <- NULL
 
   # lecture brute du fichier texte
+
+  cli::cli_progress_step("Lecture du dump...", msg_done = "Fini !")
+
   lignes_dump <- imp_lire_lignes_dump_oison(fichier_dump)
 
   options(stringsAsFactors = F)
 
   # noms des tables
+  cli::cli_progress_step("Lecture des noms de tables...", msg_done = "Fini !")
+
   noms_tables <-
     imp_extraire_noms_tables_oison(lignes_dump = lignes_dump)
 
@@ -95,6 +109,8 @@ imp_importer_dump_oison <- function(fichier_dump) {
   noms_tables <-
     gsub(noms_tables, pattern = "[a-z]*\\." , replacement = "")
 
+  # Récupération des débuts de lignes
+  cli::cli_progress_step("R\u00e9cup\u00e9ration des lignes de d\u00e9but et fin pour chaque table...", msg_done = "Fini !")
 
   # début de table
   lignes_debut <-
@@ -107,15 +123,21 @@ imp_importer_dump_oison <- function(fichier_dump) {
     data.frame(nom_table = noms_tables, ligne_debut = lignes_debut)
 
   # pour le début des tables
-  caracteristiques_tables <-
-    purrr::map(
-      .x = 1:nrow(caracteristiques_tables),
-      .f = trouver_index_ligne_debut,
-      lignes_dump = lignes_dump,
-      df_tables = caracteristiques_tables
-    ) %>%
-    purrr::reduce(rbind)  %>%
-    as.data.frame()
+
+  progressr::with_progress({
+    p <- progressr::progressor(steps = nrow(caracteristiques_tables))
+
+    caracteristiques_tables <-
+      furrr::future_map(
+        .x = 1:nrow(caracteristiques_tables),
+        .f = trouver_index_ligne_debut,
+        lignes_dump = lignes_dump,
+        df_tables = caracteristiques_tables
+      ) %>%
+      purrr::reduce(rbind)  %>%
+      as.data.frame()
+
+  })
 
   if (length(caracteristiques_tables) == 1) {
     caracteristiques_tables <- t(caracteristiques_tables)
@@ -128,7 +150,7 @@ imp_importer_dump_oison <- function(fichier_dump) {
     dplyr::arrange(index_ligne_debut) %>%
     dplyr::filter(!is.na(index_ligne_debut))
 
-  # recherche des numéros de lignes de fin de chaque table, repérées par "\."
+  # recherche des numéros de lignes de fin de chaque table, repérées par "."
   vecteur_index_lignes_fin <-
     which(stringi::stri_detect_fixed(lignes_dump, "\\."))
 
@@ -152,13 +174,13 @@ imp_importer_dump_oison <- function(fichier_dump) {
 
     {
       index_ligne_debut <- caracteristiques_tables[numero_table, ] %>%
-        pull(index_ligne_debut)
+        dplyr::pull(index_ligne_debut)
 
       index_ligne_fin <- caracteristiques_tables[numero_table, ] %>%
-        pull(index_ligne_fin)
+        dplyr::pull(index_ligne_fin)
 
       nom_table <- caracteristiques_tables[numero_table, ] %>%
-        pull(nom_table)
+        dplyr::pull(nom_table)
 
       table <-
         lignes_dump[index_ligne_debut:index_ligne_fin] # sélection des lignes de la table
@@ -173,7 +195,7 @@ imp_importer_dump_oison <- function(fichier_dump) {
       # séparation des colonnes pour chaque ligne (séparateur tabulation "\t")
       table <- strsplit(table[2:length(table)], "\t", fixed = TRUE)
 
-      # empilage, passage en dataframe et remplacement des valeurs manquantes "\N" par des NA
+      # empilage, passage en dataframe et remplacement des valeurs manquantes "N" par des NA
       table <- do.call(rbind, table) %>%
         as.data.frame() %>%
         replace(., . == "\\N", NA) %>% # gestion des valeurs manquantes
@@ -192,12 +214,19 @@ imp_importer_dump_oison <- function(fichier_dump) {
     }
 
   # extraction des tables
-  purrr::map(
-    .x = 1:nrow(caracteristiques_tables),
-    .f = extraire_table,
-    lignes_dump = lignes_dump,
-    caracteristiques_tables = caracteristiques_tables
-  )
+
+  progressr::with_progress({
+
+    p <- progressr::progressor(steps = nrow(caracteristiques_tables))
+
+    furrr::future_map(
+      .x = 1:nrow(caracteristiques_tables),
+      .f = extraire_table,
+      lignes_dump = lignes_dump,
+      caracteristiques_tables = caracteristiques_tables
+      )
+
+  })
 
   # suppression des objets non utiles pour ne conserver que les dataframes
   mes_df <-
