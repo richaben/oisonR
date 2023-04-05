@@ -11,8 +11,8 @@
 #' @importFrom stringi stri_detect_fixed
 #' @importFrom stringr str_replace_all str_extract str_extract_all str_sub str_split
 #' @importFrom utils type.convert
-#' @importFrom progressr with_progress progressor
-#' @importFrom furrr future_map
+#' @importFrom progress progress_bar
+#' @importFrom purrr map
 #' @importFrom cli cli_h1 cli_progress_step
 #'
 #' @examples
@@ -58,6 +58,7 @@ imp_importer_dump_oison <- function(fichier_dump) {
     function(ligne, df_tables, lignes_dump)
 
     {
+      pb$tick()
       prov <- list()
       prov[[1]] <- df_tables[ligne, "nom_table"]
       prov[[2]] <- df_tables[ligne, "ligne_debut"]
@@ -82,14 +83,14 @@ imp_importer_dump_oison <- function(fichier_dump) {
 
   # lecture brute du fichier texte
 
-  cli::cli_progress_step("Lecture du dump...", msg_done = "Fini !")
+  cli::cli_progress_step("Lecture du dump...")
 
   lignes_dump <- imp_lire_lignes_dump_oison(fichier_dump)
 
   options(stringsAsFactors = F)
 
   # noms des tables
-  cli::cli_progress_step("Lecture des noms de tables...", msg_done = "Fini !")
+  cli::cli_progress_step("Lecture des noms de tables...")
 
   noms_tables <-
     imp_extraire_noms_tables_oison(lignes_dump = lignes_dump)
@@ -110,7 +111,7 @@ imp_importer_dump_oison <- function(fichier_dump) {
     gsub(noms_tables, pattern = "[a-z]*\\." , replacement = "")
 
   # Récupération des débuts de lignes
-  cli::cli_progress_step("R\u00e9cup\u00e9ration des lignes de d\u00e9but et fin pour chaque table...", msg_done = "Fini !")
+  cli::cli_progress_step("R\u00e9cup\u00e9ration des lignes de d\u00e9but pour chaque table...")
 
   # début de table
   lignes_debut <-
@@ -122,13 +123,13 @@ imp_importer_dump_oison <- function(fichier_dump) {
   caracteristiques_tables <-
     data.frame(nom_table = noms_tables, ligne_debut = lignes_debut)
 
+  # creation d'une barre de progression
+  pb <-
+    progress::progress_bar$new(total = nrow(caracteristiques_tables), force = TRUE)
   # pour le début des tables
 
-  progressr::with_progress({
-    p <- progressr::progressor(steps = nrow(caracteristiques_tables))
-
     caracteristiques_tables <-
-      furrr::future_map(
+      purrr::map(
         .x = 1:nrow(caracteristiques_tables),
         .f = trouver_index_ligne_debut,
         lignes_dump = lignes_dump,
@@ -136,8 +137,6 @@ imp_importer_dump_oison <- function(fichier_dump) {
       ) %>%
       purrr::reduce(rbind)  %>%
       as.data.frame()
-
-  })
 
   if (length(caracteristiques_tables) == 1) {
     caracteristiques_tables <- t(caracteristiques_tables)
@@ -173,6 +172,8 @@ imp_importer_dump_oison <- function(fichier_dump) {
              caracteristiques_tables)
 
     {
+      pb$tick()
+
       index_ligne_debut <- caracteristiques_tables[numero_table, ] %>%
         dplyr::pull(index_ligne_debut)
 
@@ -213,20 +214,19 @@ imp_importer_dump_oison <- function(fichier_dump) {
 
     }
 
-  # extraction des tables
+  # extraction des tables avec progress bar
 
-  progressr::with_progress({
+  cli::cli_progress_step("R\u00e9cup\u00e9ration des lignes de fin pour chaque table...")
 
-    p <- progressr::progressor(steps = nrow(caracteristiques_tables))
+  pb <-
+    progress::progress_bar$new(total = nrow(caracteristiques_tables), force = TRUE)
 
-    furrr::future_map(
+    purrr::map(
       .x = 1:nrow(caracteristiques_tables),
       .f = extraire_table,
       lignes_dump = lignes_dump,
       caracteristiques_tables = caracteristiques_tables
       )
-
-  })
 
   # suppression des objets non utiles pour ne conserver que les dataframes
   mes_df <-
