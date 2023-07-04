@@ -1,7 +1,7 @@
 url: https://richaben.github.io/oisonR/
 template:
   bootstrap: 5
-  bootswatch: yeti
+  bootswatch: flatly
   bslib:
     primary: "#0054AD"
     border-radius: 0.5rem
