@@ -1,10 +1,21 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # oisonR
 
 <!-- badges: start -->
-
 [![LifeCycle](https://img.shields.io/badge/lifecycle-experimental-orange)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
@@ -23,10 +34,9 @@ devtools::install_github("richaben/oisonR")
 
 This is a basic example which shows you how to solve a common problem:
 
-``` r
+```{r example}
 library(oisonR)
-#> Registered S3 method overwritten by 'jsonlite':
-#>   method     from   
-#>   print.json jsonify
 ## basic example code
 ```
+
+
