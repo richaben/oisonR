@@ -2,15 +2,17 @@
 % Please edit documentation in R/outil_selection_zone.R
 \name{outil_selection_zone}
 \alias{outil_selection_zone}
-\title{Outil de sélection de zones (polygones)}
+\title{Outil interactif pour tracer une zone (type polygone)}
 \usage{
 outil_selection_zone()
 }
 \value{
-Lance une fenetre interactive Shiny pour selectionner son polygone et le sauver dans l'environnement pour une future requete
+Lance une fenêtre interactive Shiny pour sélectionner son polygone et
+ le sauver dans l'environnement pour une future requête
+ avec la fonction \code{get_taxon_polygon}.
 }
 \description{
-Outil de sélection de zones (polygones)
+Outil interactif pour tracer une zone (type polygone)
 }
 \examples{
 \dontrun{

@@ -1,15 +1,18 @@
 #' Consulter et télécharger les données sur les taxons de la bdd OISON pour une région administrative
 #'
-#' @param region_code Code INSEE de la région (ex. 28 pour la Normandie,...)
+#' @param region_code Code INSEE de la région (ex. 28 pour la Normandie, ...)
 #' @param login login du compte OISON
 #' @param mdp mot de passe associé au compte OISON
-#' @param collect_all Booléen. Si FALSE (par défaut) consultation du nombre d'observation (FALSE), si TRUE télécharge les données.
-#' @param date_min date minimale pour la période au format (\%Y-\%m-\%d ; cf. exemple '2022-01-01'). NULL par défaut.
-#' @param date_max date maximum pour la période au format (\%Y-\%m-\%d ; cf. exemple '2022-12-31'). NULL par défaut.
+#' @param collect_all Booléen. Si FALSE (par défaut) consultation du nombre d'observation.
+#'  Si TRUE, télécharge les données pour les taxons.
+#' @param date_min date minimale pour la période au format (\code{\%Y-\%m-\%d} ; cf. exemple '2022-01-01').
+#'  NULL par défaut.
+#' @param date_max date maximum pour la période au format (\code{\%Y-\%m-\%d} ; cf. exemple '2022-12-31').
+#'  NULL par défaut.
 #'
-#' @return Si collect_all=FALSE, retourne un dataframe avec le code du département et le nombre d'observations associé.
-#' Si collect_all=TRUE, retourne un dataframe avec les observations pour les taxons.
-#' Si date_min et date_max sont spécifiés, retourne un dataframe avec les valeurs sur la période.
+#' @return Si \code{collect_all}=FALSE, retourne un dataframe indiquant le nombre d'observations sur la région choisie.
+#'  Si \code{collect_all}=TRUE, retourne un dataframe avec le détail des observations taxons.
+#'  Si \code{date_min} et \code{date_max} sont spécifiés, retourne un dataframe avec les valeurs sur la période.
 #' @export
 #'
 #' @importFrom cli cli_abort cli_h1 cli_alert_danger cli_alert_success cli_progress_step cli_alert_info cli_warn
@@ -23,29 +26,33 @@
 #'
 #' @examples
 #' \dontrun{
-#'
 #' # -> Exemple pour consulter rapidement le nombre de données dans la région
-#' Ile-de-France (code région = 11)
+#' # Ile-de-France (code région = 11)
 #'
-#' get_taxon_region(region_code = "11", login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp")
+#' get_taxon_region(region_code = "11",
+#'                  login = "john.doe@ofb.gouv.fr",
+#'                  mdp = "mon_mdp")
 #'
-#' # -> Exemple pour télécharger les données dans la région Île-de-France (code région 11)
+#' # -> Exemple pour télécharger les données dans
+#' # la région Île-de-France (code région 11)
 #'
 #' obs_regIDF <-
 #'   get_taxon_region(region_code = "11",
-#'   login = "john.doe@ofb.gouv.fr",
-#'   mdp = "mon_mdp",
-#'   collect_all = T)
+#'                    login = "john.doe@ofb.gouv.fr",
+#'                    mdp = "mon_mdp",
+#'                    collect_all = T)
 #'
 #' # -> Exemple pour télécharger les données dans la région
-#' Île-de-France (code région 11) sur la période 2022
+#' # Île-de-France (code région 11) sur la période 2022
 #'
 #' obs_regIDF_2022 <-
-#'   get_taxon_dpt(login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp", dpt_code = "27",
-#'   date_min = '2022-01-01', date_max = '2022-12-31', collect_all = T)
-#'
+#'   get_taxon_region(login = "john.doe@ofb.gouv.fr",
+#'                    mdp = "mon_mdp",
+#'                    region_code = "11",
+#'                    date_min = '2022-01-01',
+#'                    date_max = '2022-12-31',
+#'                    collect_all = T)
 #' }
-#'
 
 get_taxon_region <- function(region_code,
                              login,
@@ -57,6 +64,10 @@ get_taxon_region <- function(region_code,
   if (missing(login) &
       missing(mdp))
     cli::cli_abort("Login et Mot de passe OISON requis !")
+
+  ## Si date_min saisie et pas date_max -> date_max = date du jour
+  if (!missing(date_min) & missing(date_max))
+    date_max <- format(Sys.Date(), '%Y-%m-%d')
 
   cli::cli_h1(glue::glue(
     "R\u00e9cup\u00e9ration des donn\u00e9es OISON - region {region_code}"

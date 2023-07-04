@@ -3,13 +3,16 @@
 #' @param dpt_code code du département (ex. 27)
 #' @param login login du compte OISON
 #' @param mdp mot de passe associé au compte OISON
-#' @param collect_all Booléen. Si FALSE (par défaut) consultation du nombre d'observation (FALSE), si TRUE télécharge les données.
-#' @param date_min date minimale pour la période au format (\%Y-\%m-\%d ; cf. exemple '2022-01-01'). NULL par défaut.
-#' @param date_max date maximum pour la période au format (\%Y-\%m-\%d ; cf. exemple '2022-12-31'). NULL par défaut.
+#' @param collect_all Booléen. Si FALSE (par défaut) consultation du nombre d'observation (FALSE).
+#'  Si TRUE, télécharge les données pour les taxons.
+#' @param date_min date minimale pour la période au format (\code{\%Y-\%m-\%d} ; cf. exemple '2022-01-01').
+#'  NULL par défaut.
+#' @param date_max date maximum pour la période au format (\code{\%Y-\%m-\%d} ; cf. exemple '2022-12-31').
+#'  NULL par défaut.
 #'
-#' @return Si collect_all=FALSE, retourne un dataframe avec le code du département et le nombre d'observations associé.
-#' Si collect_all=TRUE, retourne un dataframe avec les observations pour les taxons.
-#' Si `date_min` et `date_max` sont spécifiés, retourne un dataframe avec les valeurs sur la période.
+#' @return Si \code{collect_all}=FALSE, retourne un dataframe indiquant le nombre d'observations dans le département.
+#'  Si \code{collect_all}=TRUE, retourne un dataframe avec le détail des observations taxons.
+#'  Si \code{date_min} et \code{date_max} sont spécifiés, retourne un dataframe avec les valeurs sur la période.
 #' @export
 #'
 #' @importFrom cli cli_abort cli_h1 cli_alert_danger cli_alert_success cli_progress_step cli_alert_info cli_warn
@@ -23,23 +26,28 @@
 #'
 #' @examples
 #' \dontrun{
-#'
 #' # -> Exemple pour consulter rapidement le nombre d'observations dans le département 27,
-#' sans téléchargement des données :
-#'
-#' get_taxon_dpt(dpt_code = "27", login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp")
+#' # sans téléchargement des données :
+#' get_taxon_dpt(dpt_code = "27",
+#'               login = "john.doe@ofb.gouv.fr",
+#'               mdp = "mon_mdp")
 #'
 #' # -> Exemple pour consulter rapidement le nombre d'observations sur la période 2022
-#' dans le département 27, sans téléchargement des données :
-#'
-#' get_taxon_dpt(dpt_code = "27", login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp",
-#' date_min = '2022-01-01', date_max = '2022-12-31')
+#' # dans le département 27, sans téléchargement des données :
+#' get_taxon_dpt(
+#'   dpt_code = "27",
+#'   login = "john.doe@ofb.gouv.fr",
+#'   mdp = "mon_mdp",
+#'   date_min = '2022-01-01',
+#'   date_max = '2022-12-31'
+#' )
 #'
 #' # -> Exemple pour télécharger les données dans le département 27
-#'
 #' obs_dpt27 <-
-#'   get_taxon_dpt(login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp", dpt_code = "27", collect_all = T)
-#'
+#'   get_taxon_dpt(login = "john.doe@ofb.gouv.fr",
+#'                 mdp = "mon_mdp",
+#'                 dpt_code = "27",
+#'                 collect_all = T)
 #' }
 
 get_taxon_dpt <- function(dpt_code,
@@ -52,6 +60,10 @@ get_taxon_dpt <- function(dpt_code,
   if (missing(login) &
       missing(mdp))
     cli::cli_abort("Login et Mot de passe OISON requis !")
+
+  ## Si date_min saisie et pas date_max -> date_max = date du jour
+  if (!missing(date_min) & missing(date_max))
+    date_max <- format(Sys.Date(), '%Y-%m-%d')
 
   cli::cli_h1(glue::glue(
     "R\u00e9cup\u00e9ration des donn\u00e9es OISON - dpt {dpt_code}"

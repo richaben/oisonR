@@ -2,21 +2,21 @@
 % Please edit documentation in R/mef_creer_table_taxon_oison.R
 \name{mef_creer_table_taxon_oison}
 \alias{mef_creer_table_taxon_oison}
-\title{Fonction pour créer le tableau taxon issu de OISON}
+\title{Fonction pour créer un tableau taxon issu de OISON}
 \usage{
 mef_creer_table_taxon_oison()
 }
 \value{
 un dataframe avec les observations taxons.
- La colonne 'geometry' spécifie le type de géométrie (point, lignes, polygones) pour l'observation,
+ La colonne \code{geometry} spécifie le type de géométrie (point, lignes, polygones) pour l'observation,
  et doit être traitée avec précaution lors d'un export sous un autre format (.csv, ...).
 }
 \description{
-Cette fonction permet de créer un tableau avec les observations 'taxon' présentes dans la
- base OISON, à partir des tables importés par le dump sql de la base.
+Cette fonction permet de créer un tableau avec les observations \code{taxon} présentes dans la
+ base OISON, à partir des tables importées par le dump de la base.
 }
 \details{
-Nécessite au préalable d'importer le dump sql avec la fonction adéquate.
+Nécessite au préalable d'importer le dump sql avec la fonction \code{imp_importer_dump_oison}.
 }
 \examples{
 \dontrun{
