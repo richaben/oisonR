@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# oisonR
+# Package `oisonR`
 
 <!-- badges: start -->
 
@@ -24,6 +24,6 @@ devtools::install_github("richaben/oisonR")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-library(oisonR)
 ## basic example code
+library(oisonR)
 ```
