@@ -1,0 +1,10 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  comment-utiliser-oisonR: comment-utiliser-oisonR.html
+last_built: 2023-07-04T11:42Z
+urls:
+  reference: https://richaben.github.io/oisonR/reference
+  article: https://richaben.github.io/oisonR/articles
+
