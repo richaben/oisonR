@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Package `oisonR`
+# oisonR
 
 <!-- badges: start -->
 
@@ -10,7 +10,7 @@
 [![pkgdown](https://github.com/richaben/oisonR/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/richaben/oisonR/actions/workflows/pkgdown.yaml)
 <!-- badges: end -->
 
-Un package `R` pour les données OISON (OFB)
+oisonR est un package `R` pour les données OISON (OFB)
 
 ## Installation
 

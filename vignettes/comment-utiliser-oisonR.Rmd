@@ -14,6 +14,11 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Prérequis
+
+L'utilisation de ce package est tributaire d'un accès à l'application de saisie [OISON](https://oison.ofb.fr/), dont l'utilisation est restreinte aux agents de l'OFB sur inscription (création de compte au préalable).
+
 ```{r setup, eval=FALSE}
 library(oisonR)
 ```
+
