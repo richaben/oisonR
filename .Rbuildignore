@@ -4,3 +4,8 @@
 ^dev_history_file\.R$
 ^README\.Rmd$
 ^\.github$
+^doc$
+^Meta$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
