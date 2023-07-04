@@ -1,6 +1,8 @@
-#' Outil de sélection de zones (polygones)
+#' Outil interactif pour tracer une zone (type polygone)
 #'
-#' @return Lance une fenetre interactive Shiny pour selectionner son polygone et le sauver dans l'environnement pour une future requete
+#' @return Lance une fenêtre interactive Shiny pour sélectionner son polygone et
+#'  le sauver dans l'environnement pour une future requête
+#'  avec la fonction \code{get_taxon_polygon}.
 #' @export
 #'
 #' @importFrom cli cli_alert_success
@@ -150,12 +152,12 @@ outil_selection_zone <- function() {
         sf::st_transform(crs = 2154)
 
       assign("selection_zone",
-             zone_sel$geometry %>% sf::st_as_text(),
-             envir = .GlobalEnv)
+             value = zone_sel$geometry %>% sf::st_as_text(),
+             envir = globalenv())
     })
 
     shiny::observeEvent(input$ending, {
-      cli::cli_alert_success("Zone(s) sauvegard\u00e9e(s) dans l\'environnement ! ")
+      cli::cli_alert_success("Zone(s) sauvegard\u00e9e(s) dans l\'environnement !")
       print(selection_zone)
       shiny::stopApp()
     })

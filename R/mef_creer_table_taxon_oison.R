@@ -1,17 +1,18 @@
-#' Fonction pour créer le tableau taxon issu de OISON
+#' Fonction pour créer un tableau taxon issu de OISON
 #'
-#' Cette fonction permet de créer un tableau avec les observations 'taxon' présentes dans la
-#'  base OISON, à partir des tables importés par le dump sql de la base.
+#' Cette fonction permet de créer un tableau avec les observations \code{taxon} présentes dans la
+#'  base OISON, à partir des tables importées par le dump de la base.
 #'
-#'  Nécessite au préalable d'importer le dump sql avec la fonction adéquate.
+#'  Nécessite au préalable d'importer le dump sql avec la fonction \code{imp_importer_dump_oison}.
 #'
 #' @return un dataframe avec les observations taxons.
-#'  La colonne 'geometry' spécifie le type de géométrie (point, lignes, polygones) pour l'observation,
+#'  La colonne \code{geometry} spécifie le type de géométrie (point, lignes, polygones) pour l'observation,
 #'  et doit être traitée avec précaution lors d'un export sous un autre format (.csv, ...).
 #' @export
 #'
 #' @importFrom dplyr filter mutate rename left_join select recode as_tibble
 #' @importFrom sf st_as_sfc
+#' @importFrom stats setNames
 #'
 #' @examples
 #' \dontrun{

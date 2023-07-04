@@ -3,14 +3,19 @@
 #' @param zone_selection un objet contenant le zone (polygon), au CRS RGF93 (epsg: 2154)
 #' @param login login du compte OISON
 #' @param mdp mot de passe associé au compte OISON
-#' @param collect_all Booléen. Si FALSE (par défaut) consultation du nombre d'observation (FALSE), si TRUE télécharge les données.
-#' @param draw_zone Booléen. Si TRUE, lance l'outil de sélection de zones. Par défaut, FALSE.
-#' @param date_min date minimale pour la période au format (\%Y-\%m-\%d ; cf. exemple '2022-01-01'). NULL par défaut.
-#' @param date_max date maximum pour la période au format (\%Y-\%m-\%d ; cf. exemple '2022-12-31'). NULL par défaut.
+#' @param collect_all Booléen. Si FALSE (par défaut) consultation du nombre d'observation (FALSE).
+#'  Si TRUE télécharge les données.
+#' @param draw_zone Booléen. Si TRUE, lance l'outil de sélection de zones.
+#'  Par défaut, FALSE.
+#' @param date_min date minimale pour la période au format (\code{\%Y-\%m-\%d} ; cf. exemple '2022-01-01').
+#'  NULL par défaut.
+#' @param date_max date maximum pour la période au format (\code{\%Y-\%m-\%d} ; cf. exemple '2022-12-31').
+#'  NULL par défaut.
 #'
-#' @return Si collect_all=FALSE, retourne un dataframe avec le code du département et le nombre d'observations associé.
-#' Si collect_all=TRUE, retourne un dataframe avec les observations pour les taxons.
-#' Si date_min et date_max sont spécifiés, retourne un dataframe avec les valeurs sur la période.
+#' @return Si \code{collect_all}=FALSE, retourne uniquement un dataframe avec le nombre d'observations associé
+#'  sur la zone géographique sélectionnée.
+#'  Si \code{collect_all}=TRUE, retourne un dataframe avec les observations pour les taxons.
+#'  Si \code{date_min} et \code{date_max} sont spécifiés, retourne un dataframe avec les valeurs sur la période.
 #' @export
 #'
 #' @importFrom cli cli_abort cli_alert_warning cli_h1 cli_alert_danger cli_alert_success cli_progress_step cli_alert_info cli_warn
@@ -25,42 +30,49 @@
 #' \dontrun{
 #' rm(selection_zone)
 #'
-#' ## -> Exemple 1) Collecter des données sur polygone défini manuellement
-#'
+#' ## Exemple 1) Collecter des données sur un polygone défini manuellement:
 #' test_zone <-
-#' "POLYGON ((410677.9 6877209, 413275.2 6929083,
-#' 496961.8 6925506, 495122.6 6873600, 410677.9 6877209))"
+#'   "POLYGON ((410677.9 6877209, 413275.2 6929083, 496961.8 6925506,
+#' 495122.6 6873600, 410677.9 6877209))"
 #'
 #' get_taxon_polygon(zone_selection = test_zone,
-#'                  login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp",
-#'                  collect_all = F, draw_zone = F)
+#'                   login = "john.doe@ofb.gouv.fr",
+#'                   mdp = "mon_mdp",
+#'                   collect_all = F,
+#'                   draw_zone = F)
 #'
-#' ## -> Exemple 2) Consulter des données sur polygone tracé en même temps avec l'outil de traçage:
+#' ## Exemple 2) Consulter des données sur un polygone tracé via l'outil de traçage:
+#' get_taxon_polygon(login = "john.doe@ofb.gouv.fr",
+#'                   mdp = "mon_mdp",
+#'                   collect_all = F,
+#'                   draw_zone = T)
 #'
-#' get_taxon_polygon(login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp",
-#'                  collect_all = F, draw_zone = T)
+#' ## Exemple 3) Collecter des données sur un polygone tracé en même temps avec l'outil de traçage:
+#' get_taxon_polygon(login = "john.doe@ofb.gouv.fr",
+#'                   mdp = "mon_mdp",
+#'                   collect_all = T,
+#'                   draw_zone = T)
 #'
-#' ## -> Exemple 3)  Collecter des données sur polygone tracé en même temps avec l'outil de traçage:
+#' ## Exemple 4) Consulter des données sur un polygone déjà sauvegardé dans l'environnement:
+#' get_taxon_polygon(login = "john.doe@ofb.gouv.fr",
+#'                   mdp = "mon_mdp",
+#'                   collect_all = F,
+#'                   draw_zone = F)
 #'
-#' get_taxon_polygon(login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp",
-#'                  collect_all = T, draw_zone = T)
-#'
-#' ## -> Exemple 4) Consulter des données sur un polygone déjà sauvegardé dans l'environnement:
-#'
-#' get_taxon_polygon(login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp",
-#'                  collect_all = F, draw_zone = F)
-#'
-#' ## -> Exemple 5) Consulter des données sur un polygone connu et
-#' défini manuellement, sur une période précise:
+#' ## Exemple 5) Consulter des données sur un polygone connu et
+#' ## défini manuellement sur une période précise:
 #'
 #' test_zone <-
-#' "POLYGON ((410677.9 6877209, 413275.2 6929083,
-#' 496961.8 6925506, 495122.6 6873600, 410677.9 6877209))"
+#'   "POLYGON ((410677.9 6877209, 413275.2 6929083, 496961.8 6925506,
+#' 495122.6 6873600, 410677.9 6877209))"
 #'
-#' get_taxon_polygon(zone_selection = test_zone, login = "john.doe@ofb.gouv.fr", mdp = "mon_mdp",
-#'                  collect_all = F, draw_zone = T,
-#'                  date_min = '2022-01-01', date_max = '2022-12-31')
-#'
+#' get_taxon_polygon(zone_selection = test_zone,
+#'                   login = "john.doe@ofb.gouv.fr",
+#'                   mdp = "mon_mdp",
+#'                   collect_all = F,
+#'                   draw_zone = T,
+#'                   date_min = '2022-01-01',
+#'                   date_max = '2022-12-31')
 #' }
 
 get_taxon_polygon <-
@@ -77,6 +89,10 @@ get_taxon_polygon <-
     if (missing(login) &
         missing(mdp))
       cli::cli_abort("Login et Mot de passe OISON requis !")
+
+    ## Si date_min saisie et pas date_max -> date_max = date du jour
+    if (!missing(date_min) & missing(date_max))
+      date_max <- format(Sys.Date(), '%Y-%m-%d')
 
     if (missing(zone_selection) &
         exists("selection_zone") == TRUE & draw_zone == FALSE) {

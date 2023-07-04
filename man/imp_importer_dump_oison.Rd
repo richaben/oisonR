@@ -2,7 +2,7 @@
 % Please edit documentation in R/imp_importer_dump_oison.R
 \name{imp_importer_dump_oison}
 \alias{imp_importer_dump_oison}
-\title{Fonction pour importer le dump de la base OISON}
+\title{Fonction pour importer un dump de la base OISON}
 \usage{
 imp_importer_dump_oison(fichier_dump)
 }
@@ -13,7 +13,7 @@ imp_importer_dump_oison(fichier_dump)
 L'ensemble des tables de la base (sauf tables 'mapping')
 }
 \description{
-Fonction pour importer le dump de la base OISON
+Fonction pour importer un dump de la base OISON
 }
 \examples{
 

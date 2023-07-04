@@ -1,4 +1,4 @@
-#' Fonction pour importer le dump de la base OISON
+#' Fonction pour importer un dump de la base OISON
 #'
 #' @param fichier_dump chemin vers l'objet .sql du dump
 #'
