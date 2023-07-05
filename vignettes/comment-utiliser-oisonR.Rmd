@@ -14,11 +14,24 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Prérequis
+## Prérequis pour l'utilisation du package
 
-L'utilisation de ce package est tributaire d'un accès à l'application de saisie [OISON](https://oison.ofb.fr/), dont l'utilisation est restreinte aux agents de l'OFB sur inscription (création de compte au préalable).
+L'utilisation de ce package est tributaire d'un accès à l'application de saisies opportunistes [OISON](https://oison.ofb.fr/), dont l'accès est réservé aux agents de l'OFB (création de compte nécessaire avant connexion).
+
+Certaines fonctions du package utilisent le couple `login`/`mot de passe` pour se connecter à la base de données OISON.
+
+> Conseil : Pour ne pas les taper à chaque utilisation des fonctions, il est possible de stocker ses identifiants dans l'environnement `R` (*et éviter une possible fuite*). La marche à suivre pour les stocker :
 
 ```{r setup, eval=FALSE}
-library(oisonR)
-```
+## 1° - ouvrir le fichier de configuration de l'environnement R avec la fonction :
+usethis::edit_r_environ()
 
+## 2° - dans la fenêtre ouverte intitulée '.Renviron', 
+# sauvegarder les lignes suivantes correspondant aux identifiants
+OISON_login = "john.doe@ofb.gouv.fr"
+OISON_mdp = "moncodesecret"
+
+## 3° - dans les fonctions, il suffit de les lignes suivantes (à la place des 'vrais' identifiants) :
+Sys.getenv('OISON_login')
+Sys.getenv('OISON_mdp')
+```
