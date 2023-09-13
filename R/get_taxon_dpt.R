@@ -72,8 +72,8 @@ get_taxon_dpt <- function(dpt_code,
   ## Connexion url base de l'api
   url_base <- "https://api-oison.ofb.fr/login-check"
 
-  login <- list("_password" = mdp,
-                "_username" = login)
+  login <- list("password" = mdp,
+                "username" = login)
 
   connexion <- httr::POST(url_base,
                           body = login,
