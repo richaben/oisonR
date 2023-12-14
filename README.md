@@ -19,7 +19,7 @@ La version de développement sur [GitHub](https://github.com/) :
 devtools::install_github("richaben/oisonR")
 ```
 
-## Example
+## Example2
 
 This is a basic example which shows you how to solve a common problem:
 

@@ -8,7 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
+  fig.path = "man/figures/",
   out.width = "100%"
 )
 ```
@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
 # oisonR 
 
 <!-- badges: start -->
-
 [![R-CMD-check](https://github.com/richaben/oisonR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/richaben/oisonR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
@@ -31,7 +30,7 @@ La version de développement sur [GitHub](https://github.com/) :
 devtools::install_github("richaben/oisonR")
 ```
 
-## Example
+## Example2
 
 This is a basic example which shows you how to solve a common problem:
 
