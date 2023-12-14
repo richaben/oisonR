@@ -4,6 +4,8 @@
 # oisonR
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/richaben/oisonR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/richaben/oisonR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 oisonR est un package `R` pour les données OISON (OFB)
