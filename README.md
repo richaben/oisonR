@@ -8,6 +8,7 @@
 [![R-CMD-check](https://github.com/richaben/oisonR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/richaben/oisonR/actions/workflows/R-CMD-check.yaml)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![pkgdown](https://github.com/richaben/oisonR/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/richaben/oisonR/actions/workflows/pkgdown.yaml)
 <!-- badges: end -->
 
 oisonR est un package `R` pour les données OISON (OFB)
@@ -21,7 +22,7 @@ La version de développement sur [GitHub](https://github.com/) :
 devtools::install_github("richaben/oisonR")
 ```
 
-## Example2
+## Example
 
 This is a basic example which shows you how to solve a common problem:
 
