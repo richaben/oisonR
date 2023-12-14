@@ -1,8 +1,4 @@
 url: https://richaben.github.io/oisonR/
 template:
   bootstrap: 5
-  bootswatch: flatly
-  bslib:
-    border-radius: 0.5rem
-    btn-border-radius: 0.25rem
 
