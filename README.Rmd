@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# oisonR 
+# oisonR <a href="https://richaben.github.io/oisonR/"><img src="man/figures/logo.png" align="right" height="139" alt="oisonR website" /></a>
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/richaben/oisonR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/richaben/oisonR/actions/workflows/R-CMD-check.yaml)

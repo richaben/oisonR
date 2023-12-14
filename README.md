@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# oisonR
+# oisonR <a href="https://richaben.github.io/oisonR/"><img src="man/figures/logo.png" align="right" height="139" alt="oisonR website" /></a>
 
 <!-- badges: start -->
 
