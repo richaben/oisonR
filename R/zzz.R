@@ -3,10 +3,15 @@
 
 .onAttach <- function(libname, pkgname) {
 
+  invisible(suppressPackageStartupMessages(
+    sapply(c("jsonlite"),
+           requireNamespace, quietly = TRUE)
+  ))
+
   url_issues <- "https://github.com/richaben/oisonR/issues"
 
   welcome <- function() {
-    cli::cli_h1(glue::glue("{cli::col_br_blue(\'Bienvenue dans oisonR\')} {cli::col_br_blue(utils::packageVersion(\'oisonR\'))}"))
+    cli::cli_h1(glue::glue("{cli::col_blue(\'Bienvenue dans oisonR\')} {cli::col_blue(utils::packageVersion(\'oisonR\'))}"))
     cli::cli_par()
     cli::cli_end()
     cli::cli_alert_info(cli::col_br_red("A noter avant de d\u00e9buter :"))

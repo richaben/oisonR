@@ -84,6 +84,14 @@ OISON_BDhostname = "URL_DE_LA_BDD"
 OISON_BDport = "LE_PORT_DE_LA_BDD"
 OISON_BDuid = "IDENTIFIANT_DE_CONNEXION_A_LA_BDD"
 OISON_BDpwd = "MOT_DE_PASSE_DE_CONNEXION_A_LA_BDD"
+
+## 3° - dans les fonctions, ces informations doivent être utilisées avec les
+## lignes suivantes :
+Sys.getenv('OISON_BDname')
+Sys.getenv('OISON_BDhostname')
+Sys.getenv('OISON_BDport')
+Sys.getenv('OISON_BDuid')
+Sys.getenv('OISON_BDpwd')
 ```
 
 

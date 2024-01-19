@@ -1,3 +1,58 @@
+#' Démarre une connexion à OISON via la base de données SQL
+#'
+#' @description
+#' Fonction qui utilise les paramètres de connexion à la base stockés dans
+#' l'environnement R (fichier `.Renviron`), et lance la connexion à la base.
+#'
+#' @return Aucune valeur. Une erreur est renvoyée si la connexion est impossible.
+#'
+#' @export
+#'
+#' @importFrom DBI dbConnect
+#' @importFrom RPostgres Postgres
+#'
+#' @examples
+#' \dontrun{
+#' bdd_oison <- start_sql_connexion()
+#' }
+#'
+start_sql_connexion <- function() {
+  conn <-
+    DBI::dbConnect(
+      drv = RPostgres::Postgres(),
+      host = Sys.getenv('OISON_BDhostname'),
+      port = Sys.getenv('OISON_BDport'),
+      dbname = Sys.getenv('OISON_BDname'),
+      user = Sys.getenv('OISON_BDuid'),
+      password = Sys.getenv('OISON_BDpwd')
+    )
+  return(conn)
+}
+
+#' Stoppe une connexion à OISON via la base de données SQL
+#'
+#' @description
+#' Fonction stoppe la connexion à la base.
+#'
+#' @param conn nom de la base à stopper.
+#' @return Aucune valeur.
+#'
+#' @importFrom DBI dbDisconnect
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' bdd_oison <- start_sql_connexion()
+#'
+#' stop_sql_connexion(conn = bdd_oison)
+#' }
+#'
+stop_sql_connexion <- function(conn) {
+  DBI::dbDisconnect(conn)
+}
+
+
 #' Test si les accès à l'API OISON sont bien renseignés
 #'
 #' @description

@@ -1,4 +1,4 @@
-#' Fonction pour créer un tableau taxon issu de OISON
+#' Fonction pour créer un tableau taxon issu d'un dump OISON
 #'
 #' Cette fonction permet de créer un tableau avec les observations \code{taxon} présentes dans la
 #'  base OISON, à partir des tables importées par le dump de la base.
@@ -16,10 +16,10 @@
 #'
 #' @examples
 #' \dontrun{
-#' df_taxon_oison <- mef_creer_table_taxon_oison()
+#' df_taxon_oison <- mef_dump_creer_table_taxon()
 #' }
 #'
-mef_creer_table_taxon_oison <-
+mef_dump_creer_table_taxon <-
   function() {
     observation %>%
       dplyr::filter(type != 'milieu') %>%

@@ -42,7 +42,7 @@ globalVariables(unique(
     "cd_ref",
     "nom_scientifique",
     "nom_vernaculaire",
-    # mef_creer_table_taxon_oison:
+    # mef_dump_creer_table_taxon_oison:
     '"time"',
     "classe",
     "classe_nombre_individus",
@@ -108,6 +108,22 @@ globalVariables(unique(
     "id",
     "id1",
     "label",
-    "parentCode"
+    "parentCode",
+    # get_table_taxon_sql:
+    "con",
+    "localisation_id",
+    "observation_milieu_id",
+    "presence",
+    "stade_developpement",
+    "time",
+    "vivant_trace",
+    # get_milieu_taxon_sql:
+    "activite",
+    "chronicite",
+    "fonction_observee",
+    "impact_situation",
+    "milieu_impact",
+    "perturbation"
   )
 ))
+
