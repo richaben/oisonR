@@ -22,6 +22,12 @@
     <loc>https://richaben.github.io/oisonR/reference/check_acces_oison_sql.html</loc>
   </url>
   <url>
+    <loc>https://richaben.github.io/oisonR/reference/get_milieu_taxon_sql.html</loc>
+  </url>
+  <url>
+    <loc>https://richaben.github.io/oisonR/reference/get_table_taxon_sql.html</loc>
+  </url>
+  <url>
     <loc>https://richaben.github.io/oisonR/reference/get_taxon_dpt.html</loc>
   </url>
   <url>
@@ -43,12 +49,18 @@
     <loc>https://richaben.github.io/oisonR/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://richaben.github.io/oisonR/reference/mef_creer_table_taxon_oison.html</loc>
+    <loc>https://richaben.github.io/oisonR/reference/mef_dump_creer_table_taxon.html</loc>
   </url>
   <url>
     <loc>https://richaben.github.io/oisonR/reference/outil_selection_zone.html</loc>
   </url>
   <url>
     <loc>https://richaben.github.io/oisonR/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://richaben.github.io/oisonR/reference/start_sql_connexion.html</loc>
+  </url>
+  <url>
+    <loc>https://richaben.github.io/oisonR/reference/stop_sql_connexion.html</loc>
   </url>
 </urlset>
