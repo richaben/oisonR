@@ -1,12 +1,20 @@
 #' Fonction pour créer le tableau taxon OISON via connexion SQL
 #'
 #' @description Permet de créer une 'table taxon' à partir de la base SQL.
-#' La table ainsi créée correspond par défaut à l'ensemble des observations sur
+#' Par défaut, la table créée correspond à l'ensemble des observations sur
 #' les taxons bancarisés dans OISON.
+#' Si un argument \code{geometrie} est fourni, la table créée correspond aux
+#' observations sur les taxons sur la zone géographique spécifiée par la géométrie.
 #'
-#' @param conn nom de la base à utiliser.
+#' @param conn nom de la base à utiliser
+#' @param geometrie chaîne de caractères. Elle est utilisée pour la requête SQL pour
+#' filtrer les données.
+#' La géométrie doit être sous la forme d'une chaîne de caractères
+#' (ex. "POLYGON((x1 y1, x2 y2, x3 y3, x4 y4, x1 y1))"
+#' Sa projection doit être en RGF93 / Lambert-93 (EPSG=2154).
+#' @param ... arguments supplémentaires
 #'
-#' @return un dataframe avec les observations taxons
+#' @return un dataframe avec les observations taxons.
 #' @export
 #'
 #' @importFrom dbplyr in_schema
@@ -15,20 +23,66 @@
 #'
 #' @examples
 #' \dontrun{
+#' ## Exemple 1. Export sans géométrie
 #' bdd_oison <- start_sql_connexion()
 #'
 #' df_taxon_oison_sql <- get_table_taxon_sql(conn = bd_oison)
 #'
 #' stop_sql_connexion(conn = bdd_oison)
-#' }
 #'
+#' ### ------------- ###
+#' ## Exemple 2. Export avec géométrie spécifiée
+#'
+#' # a) créer une géométrie
+#'
+#' geom_normandie <-
+#' COGiter::regions_geo %>%
+#'   dplyr::filter(REG == 28) %>%
+#'   sf::st_as_sfc() %>%
+#'   # convert to text
+#'   sf::st_as_text()
+#'
+#' bdd_oison <- start_sql_connexion()
+#'
+#' df_taxon_oison_sql_normandie <-
+#' get_table_taxon_sql(conn = bd_oison, geometrie = geom_normandie)
+#'
+#' stop_sql_connexion(conn = bdd_oison)
+#'
+#' }
 get_table_taxon_sql <-
-  function(conn) {
-    # get observation in data schema
-    dplyr::tbl(conn, dbplyr::in_schema("data", "observation")) %>%
-      dplyr::filter(type != 'milieu') %>%
-      dplyr::rename(observation_id = id,
-                    heure = time) %>%
+  function(conn, geometrie, ...) {
+
+    { if (!missing(geometrie)) {
+      dplyr::tbl(conn, dbplyr::in_schema("data", "localisation")) %>%
+        dplyr::select(
+          localisation_id = id,
+          observation_id,
+          geometry,
+          x_point,
+          y_point,
+          surface_station,
+          longueur_troncon
+        ) %>%
+        dplyr::filter(ST_Intersects(geometry, glue::glue('SRID=2154;{geometrie}'))) } else {
+          dplyr::tbl(conn, dbplyr::in_schema("data", "localisation")) %>%
+            dplyr::select(
+              localisation_id = id,
+              observation_id,
+              geometry,
+              x_point,
+              y_point,
+              surface_station,
+              longueur_troncon
+            )
+        }
+    } %>%
+      dplyr::left_join(
+        dplyr::tbl(conn, dbplyr::in_schema("data", "observation")) %>%
+          dplyr::filter(type != 'milieu') %>%
+          dplyr::rename(observation_id = id,
+                        heure = time)) %>%
+      #
       # join to referentiel taxon by 'taxon_code'
       dplyr::left_join(
         dplyr::tbl(conn, dbplyr::in_schema("referentiels", "taxon")) %>%
@@ -46,7 +100,7 @@ get_table_taxon_sql <-
           )
       ) %>%
       # join to corine biotope part
-      left_join(
+      dplyr::left_join(
         dplyr::tbl(conn, dbplyr::in_schema("referentiels", "corine_biotope")) %>%
           dplyr::select(
             corine_biotope_id = id,
@@ -54,20 +108,6 @@ get_table_taxon_sql <-
             corine_code = code
           )
       ) %>%
-      # join to localisation part
-      dplyr::left_join(
-        dplyr::tbl(conn, dbplyr::in_schema("data", "localisation")) %>%
-          dplyr::select(
-            localisation_id = id,
-            observation_id,
-            geometry,
-            x_point,
-            y_point,
-            surface_station,
-            longueur_troncon
-          )
-      ) %>%
-
       # join to type_recherche
       dplyr::left_join(
         dplyr::tbl(conn, dbplyr::in_schema("referentiels", "type_recherche")) %>%
@@ -86,7 +126,6 @@ get_table_taxon_sql <-
             contexte_recherche = label
           )
       ) %>%
-
       # join to objectif_recherche
       dplyr::left_join(
         dplyr::tbl(
@@ -124,7 +163,7 @@ get_table_taxon_sql <-
           dplyr::select(-id) %>%
           dplyr::rename(observation_id = observation_taxon_id) %>%
           # join to taxon_stade_developpement
-          left_join(
+          dplyr::left_join(
             dplyr::tbl(
               conn,
               dbplyr::in_schema("referentiels", "taxon_stade_developpement")
@@ -135,7 +174,7 @@ get_table_taxon_sql <-
               )
           ) %>%
           # join to taxon_vivant_trace
-          left_join(
+          dplyr::left_join(
             dplyr::tbl(
               conn,
               dbplyr::in_schema("referentiels", "taxon_vivant_trace")
@@ -145,7 +184,7 @@ get_table_taxon_sql <-
 
           ) %>%
           # join to classe_nombre_individus
-          left_join(
+          dplyr::left_join(
             dplyr::tbl(
               conn,
               dbplyr::in_schema("referentiels", "classe_nombre_individus")
@@ -201,11 +240,10 @@ get_table_taxon_sql <-
         localisation_id,
         uuid
       ) %>%
-
       # test some rows
       dplyr::collect() %>%
-
       # transform geometry to WKT
       dplyr::mutate(geometry =
                       sf::st_as_sfc(structure(as.list(geometry), class = "WKB"), EWKB = TRUE))
+
   }
