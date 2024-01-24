@@ -33,6 +33,7 @@ observations sur les taxons sur la zone géographique spécifiée par la géomé
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/bien-demarrer-avec-oisonR.html">Bien démarrer avec le package oisonR</a>
+    <a class="dropdown-item" href="../articles/comment-utiliser-oisonR.html">Comment utiliser le package oisonR ?</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -108,12 +109,11 @@ filtrer les données.
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### ------------- ###</span></span></span>
 <span class="r-in"><span><span class="co">## Exemple 2. Export avec géométrie spécifiée</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># a) créer une géométrie</span></span></span>
 <span class="r-in"><span><span class="co"># devtools::install_github("MaelTheuliere/COGiter")</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">geom_normandie</span> <span class="op">&lt;-</span></span></span>
-<span class="r-in"><span>  <span class="fu">COGiter</span><span class="fu">::</span><span class="va">regions_geo</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">COGiter</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/COGiter/man/regions_geo_xx.html" class="external-link">regions_geo</a></span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">REG</span> <span class="op">==</span> <span class="fl">28</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="co"># convert to text</span></span></span>
@@ -123,7 +123,7 @@ filtrer les données.
 <span class="r-in"><span><span class="va">bdd_oison</span> <span class="op">&lt;-</span> <span class="fu"><a href="start_sql_connexion.html">start_sql_connexion</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">df_taxon_oison_sql_normandie</span> <span class="op">&lt;-</span></span></span>
-<span class="r-in"><span><span class="fu">get_table_taxon_sql</span><span class="op">(</span>conn <span class="op">=</span> <span class="va">bd_oison</span>, geometrie <span class="op">=</span> <span class="va">geom_normandie</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">get_table_taxon_sql</span><span class="op">(</span>conn <span class="op">=</span> <span class="va">bdd_oison</span>, geometrie <span class="op">=</span> <span class="va">geom_normandie</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="stop_sql_connexion.html">stop_sql_connexion</a></span><span class="op">(</span>conn <span class="op">=</span> <span class="va">bdd_oison</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>

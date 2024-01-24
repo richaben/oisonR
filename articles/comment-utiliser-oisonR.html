@@ -48,6 +48,7 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/bien-demarrer-avec-oisonR.html">Bien démarrer avec le package oisonR</a>
     <a class="dropdown-item" href="../articles/comment-utiliser-oisonR.html">Comment utiliser le package oisonR ?</a>
   </div>
 </li>
@@ -84,109 +85,118 @@
 
     
     
+<div class="section level2">
+<h2 id="récupérer-les-données-via-laccès-à-la-base-sql">Récupérer les données via l’accès à la base SQL<a class="anchor" aria-label="anchor" href="#r%C3%A9cup%C3%A9rer-les-donn%C3%A9es-via-lacc%C3%A8s-%C3%A0-la-base-sql"></a>
+</h2>
 <div class="section level3">
-<h3 id="pourquoi-un-package-oisonr">Pourquoi un package <code>oisonR</code> ?<a class="anchor" aria-label="anchor" href="#pourquoi-un-package-oisonr"></a>
+<h3 id="chargement-des-packages">Chargement des packages<a class="anchor" aria-label="anchor" href="#chargement-des-packages"></a>
 </h3>
-<p>Ce package a été développé pour faciliter l’accès aux données
-bancarisées dans OISON, et doit permettre leur ré-utilisation dans le
-cadre de projets de valorisation (téléchargement des données à partir de
-différentes sources, et leur mise en forme dans des formats
-exploitables).</p>
-<div class="section level4">
-<h4 id="installation-et-chargement">Installation et chargement<a class="anchor" aria-label="anchor" href="#installation-et-chargement"></a>
-</h4>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"richaben/oisonR"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Chargement</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/richaben/oisonR" class="external-link">oisonR</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/richaben/oisonR" class="external-link">oisonR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co"># devtools::install_github("MaelTheuliere/COGiter")</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MaelTheuliere/COGiter" class="external-link">COGiter</a></span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="prérequis-pour-lutilisation-du-package">Prérequis pour l’utilisation du package<a class="anchor" aria-label="anchor" href="#pr%C3%A9requis-pour-lutilisation-du-package"></a>
-</h4>
-<p>Avec ce package, l’accès aux données OISON peut se faire via deux
-sources possibles :</p>
-<ul>
-<li><p>par une connexion directe à l’application (via une API)
-nécessitant un accès <code>login</code>/<code>mot de passe</code>. Par
-ce moyen, ce sont les données en temps réel qui peuvent être obtenues ;
-mais elles sont téléchargées plus lentement (<em>requête limitée en
-nombre de lignes</em>).</p></li>
-<li><p>par la base de données SQL. Cela nécessite d’obtenir les
-paramètres de connexion à la base au préalable, et une connexion au
-réseau interne de l’OFB (ou au VPN). Par ce moyen, les données
-accessibles sont datées à J-1 sur une copie de la base (<em>en lecture
-seule</em>). Ici, un volume important de données peut être téléchargé
-(<em>plus rapidement que par l’API</em>).</p></li>
-</ul>
+<div class="section level3">
+<h3 id="les-observations-taxons">Les <em>observations taxons</em><a class="anchor" aria-label="anchor" href="#les-observations-taxons"></a>
+</h3>
+<p>La fonction <code><a href="../reference/get_table_taxon_sql.html">get_table_taxon_sql()</a></code> permet de récupérer
+les données d’<em>observations taxons</em> de la base SQL OISON. Avant
+de l’utiliser, il faut initier la connexion à la base de données avec la
+fonction <code>init_connexion_sql()</code> (et s’assurer de disposer des
+paramètres de configuration). Après requête, la fermeture de la
+connexion est conseillé avec la fonction
+<code><a href="../reference/stop_sql_connexion.html">stop_sql_connexion()</a></code>.</p>
+<p>Par défaut, l’ensemble des observations est récupéré, sauf si une
+géométrie est précisée en argument dans la fonction.</p>
 <blockquote>
-<p><strong>Conseil</strong> : <em>Certaines fonctions du package exigent
-donc des paramètres particuliers pour l’accès aux données (par exemple
-login, mot de passe, etc…). Pour ne pas saisir ces paramètres à chaque
-utilisation, il est conseillé de stocker ces éléments directement dans
-l’environnement <code>R</code></em> (<em>cf. procédure
-ci-dessous</em>).</p>
+<p><em>L’exemple ci-dessous présente le cas d’un export sur les
+observations taxons réalisés en Bretagne</em>.</p>
 </blockquote>
-<p>Deux fonctions utiles sont disponibles pour vérifier si les
-informations de connexion sont bien stockées dans l’environnement
-<code>R</code> :</p>
+<ul>
+<li>Création d’une géométrie pour la Bretagne :</li>
+</ul>
+<p>Le package R <code>COGiter</code> peut être utilisé pour créer
+simplement une géométrie et la convertir en chaîne de caractères
+utilisable pour la requête SQL.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## pour vérifier les éléments de connexion via l'api</span></span>
-<span><span class="fu"><a href="../reference/check_acces_oison_api.html">check_acces_oison_api</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## pour vérifier les éléments de connexion via la connexion SQL</span></span>
-<span><span class="fu"><a href="../reference/check_acces_oison_sql.html">check_acces_oison_sql</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="marche-à-suivre-pour-stocker-des-informations-dans-lenvironnement-r">Marche à suivre pour stocker des informations dans l’environnement
-<code>R</code><a class="anchor" aria-label="anchor" href="#marche-%C3%A0-suivre-pour-stocker-des-informations-dans-lenvironnement-r"></a>
-</h4>
-<p>⚠ <em>Il faut bien renseigner les informations dans
-l’environnement</em> <code>R</code> <em>avec le même nom que ci-dessous
-pour que ces éléments soient vérifiables et utilisables par les
-fonctions</em> <code>check_acces_oison_***()</code> .</p>
-<ol style="list-style-type: decimal">
-<li>Connexion via l’API</li>
-</ol>
+<code class="sourceCode R"><span><span class="va">geom_BZH</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">COGiter</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/COGiter/man/regions_geo_xx.html" class="external-link">regions_geo</a></span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># filtre sur BZH</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">REG</span> <span class="op">==</span> <span class="fl">53</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># convert to text</span></span>
+<span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_text.html" class="external-link">st_as_text</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Le début de la géométrie ressemble à cela : MULTIPOLYGON (((267337.9
+6730985, 269412.2 6732332, 269637.9 6734259, 270864.3 6735502, 270508.8
+673…..</p>
+<ul>
+<li>Requête observations taxons :</li>
+</ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## 1° - ouvrir le fichier de configuration de l'environnement R avec la fonction :</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">edit_r_environ</span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># initialisation de la connexion</span></span>
+<span><span class="va">bdd_oison</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/start_sql_connexion.html">start_sql_connexion</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## 2° - dans la fenêtre ouverte intitulée '.Renviron', </span></span>
-<span><span class="co"># sauvegarder les lignes suivantes correspondant aux identifiants</span></span>
-<span><span class="va">OISON_ID</span> <span class="op">=</span> <span class="st">"john.doe@ofb.gouv.fr"</span></span>
-<span><span class="va">OISON_PASSWORD</span> <span class="op">=</span> <span class="st">"moncodesecret"</span></span>
+<span><span class="co"># requete</span></span>
+<span><span class="va">oison_BZH</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/get_table_taxon_sql.html">get_table_taxon_sql</a></span><span class="op">(</span>conn <span class="op">=</span> <span class="va">bdd_oison</span>,</span>
+<span>                      geometrie <span class="op">=</span> <span class="va">geom_BZH</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## 3° - dans les fonctions, ces informations peuvent être utilisées avec les </span></span>
-<span><span class="co">## lignes suivantes (à la place des 'vrais' identifiants) :</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">'OISON_ID'</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">'OISON_PASSWORD'</span><span class="op">)</span></span></code></pre></div>
-<ol start="2" style="list-style-type: decimal">
-<li>Connexion via la base SQL</li>
-</ol>
-<p>⚠ <em>Requiert d’avoir la bonne configuration (les bons
-paramètres)</em></p>
+<span><span class="co"># stop de la connexion</span></span>
+<span><span class="fu"><a href="../reference/stop_sql_connexion.html">stop_sql_connexion</a></span><span class="op">(</span>conn <span class="op">=</span> <span class="va">bdd_oison</span><span class="op">)</span></span></code></pre></div>
+<p>Le résultat de la requête est un objet de type
+<code>data.frame</code>. Les noms de colonnes sont les suivants :</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## 1° - ouvrir le fichier de configuration de l'environnement R avec la fonction :</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">edit_r_environ</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## 2° - dans la fenêtre ouverte intitulée '.Renviron', </span></span>
-<span><span class="co"># sauvegarder les lignes suivantes avec le bon paramétrage</span></span>
-<span><span class="va">OISON_BDname</span> <span class="op">=</span> <span class="st">'NOM_DE_LA_BDD'</span></span>
-<span><span class="va">OISON_BDhostname</span> <span class="op">=</span> <span class="st">"URL_DE_LA_BDD"</span></span>
-<span><span class="va">OISON_BDport</span> <span class="op">=</span> <span class="st">"LE_PORT_DE_LA_BDD"</span></span>
-<span><span class="va">OISON_BDuid</span> <span class="op">=</span> <span class="st">"IDENTIFIANT_DE_CONNEXION_A_LA_BDD"</span></span>
-<span><span class="va">OISON_BDpwd</span> <span class="op">=</span> <span class="st">"MOT_DE_PASSE_DE_CONNEXION_A_LA_BDD"</span></span>
-<span></span>
-<span><span class="co">## 3° - dans les fonctions, ces informations doivent être utilisées avec les</span></span>
-<span><span class="co">## lignes suivantes :</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">'OISON_BDname'</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">'OISON_BDhostname'</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">'OISON_BDport'</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">'OISON_BDuid'</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">'OISON_BDpwd'</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">oison_BZH</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>A noter, qu’il s’agit ici d’une vue simplifiée par rapport à ce qu’il
+est possible d’exporter directement dans l’application OISON (les
+exports et formats d’exports de l’application OISON n’étant pas
+satisfaisants). Ici, le format est directement exploitable et
+manipulable pour valorisation ultérieure.</p>
+<p>Par exemple, si l’on souhaite extraire les taxons correspondant aux
+écrevisses observées sur l’année 2023, il suffit de faire :</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">oison_BZH_ecrevisse_2023</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">oison_BZH</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># detect pattern 'creviss' and filter</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">'creviss'</span>, <span class="va">nom_vernaculaire</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>annee <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">date</span>, <span class="st">'%Y'</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">annee</span> <span class="op">==</span> <span class="fl">2023</span><span class="op">)</span></span></code></pre></div>
+<p>Pour une réutilisation en analyse spatiale, la colonne
+<code>geometry</code> peut facilement être convertie au format
+<code>sf</code> (<em>simple features</em>) avec la fonction
+<code><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">sf::st_as_sf()</a></code>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">oison_BZH_ecrevisse_2023_sf</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">oison_BZH_ecrevisse_2023</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Les représentations interactives sont possibles (<em>à noter que dans
+l’exemple ci-dessous il ne s’agit pas des vraies données… floutage
+!</em> 🕶) :</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">oison_BZH_ecrevisse_2023_sf</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">mapview</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html" class="external-link">mapview</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>L’export au format <em>geopackage</em> <code>gpkg</code> est possible
+pour une réutilisation sous SIG. Les géométries sont conservées, et
+c’est important car différents types peuvent être saisis dans OISON
+(point, polygones, polylignes, …).</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_write.html" class="external-link">write_sf</a></span><span class="op">(</span><span class="va">oison_BZH_ecrevisse_2023_sf</span>, </span>
+<span>             <span class="st">"D:/oison_BZH_ecrevisse_2023.gpkg"</span>, </span>
+<span>             driver <span class="op">=</span> <span class="st">"GPKG"</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="les-observations-milieu">Les <em>observations milieu</em><a class="anchor" aria-label="anchor" href="#les-observations-milieu"></a>
+</h3>
+<p>TO BE CONTINUED… 🛠</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="récupérer-les-données-via-lapi">Récupérer les données via l’API<a class="anchor" aria-label="anchor" href="#r%C3%A9cup%C3%A9rer-les-donn%C3%A9es-via-lapi"></a>
+</h2>
+<p>TO BE CONTINUED… 🛠</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>Sur cette page</h2>
     </nav></aside>
