@@ -2,7 +2,7 @@
 title: "Bien démarrer avec le package oisonR"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Bien démarrer avec le package oisonR}
+  %\VignetteIndexEntry{1. Bien démarrer avec le package oisonR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,7 +22,7 @@ Ce package a été développé pour faciliter l’accès aux données bancarisé
 
 ```{r installation, eval=FALSE}
 # install.packages("devtools")
-devtools::install_github("richaben/oisonR")
+devtools::install_github("richaben/oisonR", build_vignettes = TRUE)
 
 # Chargement
 library(oisonR)

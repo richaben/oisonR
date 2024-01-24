@@ -20,25 +20,37 @@ l’outil est restreint et nécessite un compte utilisateur (*création de
 compte nécessaire avant connexion*).
 
 Ce package a été développé pour faciliter l’accès aux données
-bancarisées dans OISON, et doit permettre leur ré-utilisation dans le
-cadre de projets de valorisation (téléchargement des données à partir de
-différentes sources, et leur mise en forme dans des formats
-exploitables).
+bancarisées dans [OISON](https://oison.ofb.fr/), et ainsi permettre leur
+ré-utilisation dans le cadre de projets de valorisation (*téléchargement
+des données et leur mise en forme dans des formats exploitables*).
 
-## Installation
+### Installation et chargement
 
-La version de développement sur [GitHub](https://github.com/) :
+La version de développement sur [GitHub](https://github.com/)
+(*installer le package `devtools` si nécessaire*).
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("richaben/oisonR")
+devtools::install_github("richaben/oisonR", build_vignettes = TRUE)
 ```
 
-## Exemple
-
-This is a basic example which shows you how to solve a common problem:
+Pour charger le package `oisonR` :
 
 ``` r
-## basic example code
 library(oisonR)
 ```
+
+### Vignettes / Documentation
+
+Quelques vignettes sont disponibles pour l’utilisation du package :
+
+- [Bien démarrer avec le package
+  `oisonR`](https://richaben.github.io/oisonR/articles/bien-demarrer-avec-oisonR.html)
+- [Comment utiliser le package `oisonR`
+  ?](https://richaben.github.io/oisonR/articles/comment-utiliser-oisonR.html)
+
+### Issues / Bugs
+
+Pour signaler un bug, une erreur ou une suggestion, merci d’utiliser les
+issues sur le [dépôt
+GitHub](%22https://github.com/richaben/oisonR/issues%22) du package.
