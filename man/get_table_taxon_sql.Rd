@@ -40,7 +40,6 @@ stop_sql_connexion(conn = bdd_oison)
 
 ### ------------- ###
 ## Exemple 2. Export avec géométrie spécifiée
-
 # a) créer une géométrie
 # devtools::install_github("MaelTheuliere/COGiter")
 
@@ -55,7 +54,7 @@ geom_normandie <-
 bdd_oison <- start_sql_connexion()
 
 df_taxon_oison_sql_normandie <-
-get_table_taxon_sql(conn = bd_oison, geometrie = geom_normandie)
+get_table_taxon_sql(conn = bdd_oison, geometrie = geom_normandie)
 
 stop_sql_connexion(conn = bdd_oison)
 

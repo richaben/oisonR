@@ -1,33 +1,93 @@
 #' Fonction pour créer le tableau milieu OISON via connexion SQL
 #'
 #' @description Permet de créer une 'table milieu' à partir de la base SQL.
-#' La table ainsi créée correspond par défaut à l'ensemble des observations sur
+#' Par défaut, la table créée correspond à l'ensemble des observations sur
 #' les milieux bancarisés dans OISON.
+#' Si un argument \code{geometrie} est fourni, la table créée correspond aux
+#' observations sur les milieux sur la zone géographique spécifiée par la géométrie.
 #'
 #' @param conn nom de la base à utiliser.
+#' @param geometrie chaîne de caractères.
+#'  Elle est utilisée pour la requête SQL pour
+#' filtrer les données.
+#'  La géométrie doit être sous la forme d'une chaîne de caractères
+#' (ex. "POLYGON((x1 y1, x2 y2, x3 y3, x4 y4, x1 y1))".
+#'  Sa projection doit être en RGF93 / Lambert-93 (EPSG=2154).
+#' @param ... arguments supplémentaires
 #'
-#' @return un dataframe avec les observations taxons
+#' @return un dataframe avec les observations milieu
 #' @export
 #'
 #' @importFrom dbplyr in_schema
-#' @importFrom dplyr tbl filter rename left_join select collect mutate
+#' @importFrom dplyr tbl filter rename left_join right_join select collect mutate
 #' @importFrom sf st_as_sfc
 #'
 #' @examples
 #' \dontrun{
+#' ### ------------- ###
+#' ## Exemple 1. Export sans géométrie
 #' bdd_oison <- start_sql_connexion()
 #'
 #' df_milieu_oison_sql <- get_milieu_taxon_sql(conn = bd_oison)
 #'
 #' stop_sql_connexion(conn = bdd_oison)
+#'
+#' ### ------------- ###
+#' ## Exemple 2. Export avec géométrie spécifiée
+#' # a) créer une géométrie
+#' # devtools::install_github("MaelTheuliere/COGiter")
+#'
+#' geom_normandie <-
+#'   COGiter::regions_geo %>%
+#'   dplyr::filter(REG == 28) %>%
+#'   sf::st_as_sfc() %>%
+#'   # convert to text
+#'   sf::st_as_text()
+#'
+#' # b) faire la requête
+#' bdd_oison <- start_sql_connexion()
+#'
+#' df_taxon_milieu_sql_normandie <-
+#' get_milieu_taxon_sql(conn = bdd_oison, geometrie = geom_normandie)
+#'
+#' stop_sql_connexion(conn = bdd_oison)
 #' }
 #'
 get_milieu_taxon_sql <-
-  function(conn) {
+  function(conn, geometrie, ...) {
+
+    { if (!missing(geometrie)) {
+      dplyr::tbl(conn, dbplyr::in_schema("data", "localisation")) %>%
+        dplyr::select(
+          localisation_id = id,
+          observation_id,
+          geometry,
+          x_point,
+          y_point,
+          surface_station,
+          longueur_troncon
+        ) %>%
+        dplyr::filter(ST_Intersects(geometry, glue::glue('SRID=2154;{geometrie}'))) } else {
+          dplyr::tbl(conn, dbplyr::in_schema("data", "localisation")) %>%
+            dplyr::select(
+              localisation_id = id,
+              observation_id,
+              geometry,
+              x_point,
+              y_point,
+              surface_station,
+              longueur_troncon
+            )
+        }
+    } %>%
+    # join to data observations milieu
+      dplyr::right_join(
     dplyr::tbl(conn, dbplyr::in_schema("data", "observation")) %>%
       dplyr::filter(type == 'milieu') %>%
       dplyr::rename(observation_id = id,
-                    heure = time) %>%
+                    heure = time)) %>%
+
+      #dplyr::filter(type == 'milieu') %>%
 
       # join to users part by 'initiator_user_id'
       dplyr::left_join(
@@ -143,19 +203,6 @@ get_milieu_taxon_sql <-
         ) %>%
           dplyr::select(chronicite_id = id,
                         chronicite = label)
-      ) %>%
-      # join to localisation part
-      dplyr::left_join(
-        dplyr::tbl(conn, dbplyr::in_schema("data", "localisation")) %>%
-          dplyr::select(
-            localisation_id = id,
-            observation_id,
-            geometry,
-            x_point,
-            y_point,
-            surface_station,
-            longueur_troncon
-          )
       ) %>%
       # selection columns
       dplyr::select(
