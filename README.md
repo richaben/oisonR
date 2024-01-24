@@ -17,14 +17,14 @@ les agents de l’[Office français de la biodiversité
 relatives aux espèces et aux milieux, qui sont majoritairement issues
 d’observations opportunistes, fortuites ou protocolées. L’accès à
 l’outil est restreint et nécessite un compte utilisateur (*création de
-compte nécessaire avant connexion*).
+compte nécessaire*).
 
-Ce package a été développé pour faciliter l’accès aux données
+Ce package a été développé dans le but de faciliter l’accès aux données
 bancarisées dans [OISON](https://oison.ofb.fr/), et ainsi permettre leur
 ré-utilisation dans le cadre de projets de valorisation (*téléchargement
-des données et leur mise en forme dans des formats exploitables*).
+des données et mise en forme dans des formats exploitables*).
 
-### Installation et chargement
+### 📦 Installation et chargement
 
 La version de développement sur [GitHub](https://github.com/) (*le
 package* `devtools` *est à installer si nécessaire*).
@@ -40,7 +40,7 @@ Pour charger le package `oisonR` :
 library(oisonR)
 ```
 
-### Vignettes / Documentation
+### 📚 Vignettes / Documentation
 
 Quelques vignettes sont disponibles pour l’utilisation du package :
 
@@ -49,7 +49,7 @@ Quelques vignettes sont disponibles pour l’utilisation du package :
 - [Comment utiliser le package `oisonR`
   ?](https://richaben.github.io/oisonR/articles/comment-utiliser-oisonR.html)
 
-### Issues / Bugs
+### ✉️ Issues / Bugs
 
 Pour signaler un bug, une erreur ou une suggestion, merci d’utiliser les
 issues sur le [dépôt GitHub](https://github.com/richaben/oisonR/issues)

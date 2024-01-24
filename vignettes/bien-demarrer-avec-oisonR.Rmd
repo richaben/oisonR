@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ### Pourquoi un package `oisonR` ?
 
-Ce package a été développé pour faciliter l’accès aux données bancarisées dans OISON, et doit permettre leur ré-utilisation dans le cadre de projets de valorisation (téléchargement des données à partir de différentes sources, et leur mise en forme dans des formats exploitables).
+Ce package a été développé pour faciliter l’accès aux données bancarisées dans [OISON](https://oison.ofb.fr/), et ainsi permettre leur ré-utilisation dans le cadre de projets de valorisation (téléchargement des données et leur mise en forme dans des formats exploitables).
 
 #### Installation et chargement
 
@@ -30,7 +30,7 @@ library(oisonR)
 
 #### Prérequis pour l'utilisation du package
 
-Avec ce package, l'accès aux données OISON peut se faire via deux sources possibles :
+Avec ce package, l'accès aux données [OISON](https://oison.ofb.fr/) peut se faire via deux sources possibles :
 
 -   par une connexion directe à l'application (via une API) nécessitant un accès `login`/`mot de passe`. Par ce moyen, ce sont les données en temps réel qui peuvent être obtenues ; mais elles sont téléchargées plus lentement (*requête limitée en nombre de lignes*).
 

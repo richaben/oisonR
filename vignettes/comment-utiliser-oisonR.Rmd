@@ -32,7 +32,7 @@ library(COGiter)
 
 ### Les observations taxons
 
-Les *observations taxons* de OISON sont récupérables avec la fonction `get_table_taxon_sql()`. Avant son utilisation, il faut toutefois : 
+Les *observations taxons* de [OISON](https://oison.ofb.fr/) sont récupérables avec la fonction `get_table_taxon_sql()`. Avant son utilisation, il faut toutefois : 
 
   - s'assurer de disposer des paramètres de connexion à la base SQL (*cf*. la vignette `oisonR` pour plus de détails) ;
   - puis, initier la connexion à la base de données avec la fonction `init_connexion_sql()`.
@@ -41,11 +41,11 @@ La fonction permet de récupérer l'ensemble des observations de la base, sauf s
 
 Après récupération des données, il est conseillé de stopper la connexion à la base avec la fonction `stop_sql_connexion()`.
 
-#### Exemple pour réaliser un export des observations taxons sur les écrevisses en Bretagne pour l'année 2023
+### Exemple pour réaliser un export des observations taxons sur les écrevisses en Bretagne pour l'année 2023
 
-  1. Création d'une géométrie pour la Bretagne
+#### 1. Création d'une géométrie pour la Bretagne
 
-Le package R `COGiter` peut être utilisé pour créer récupérer la géométrie de la région et la convertir ensuite en chaîne de caractères qui sera utilisée pour effectuer la requête.
+Le package `COGiter` peut être utilisé pour récupérer la géométrie correspondant à la région, et la convertir en chaîne de caractères pour effectuer la requête.
 
 ```{r}
 geom_BZH <-
@@ -61,10 +61,10 @@ geom_BZH <-
 string_geom_exemple <- paste0(substr(geom_BZH,1,100), '....')
 ```
 
-Le début de la géométrie ressemble à cela : 
+Le début de la géométrie prend la forme suivante : 
 `r string_geom_exemple`. 
 
-  2. Récupération des données *observations taxons*
+#### 2. Récupération des données *observations taxons*
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
 # a) connexion
@@ -86,11 +86,11 @@ oison_BZH %>%
   names()
 ```
 
-> ⚠️ **A noter** que certains champs de données présents dans les exports via l'application OISON ne sont pas présents dans ces exports avec ce package. Il s'agit ici d'une vue simplifiée et utilisable directement. 
+> ⚠️ A noter qu'ici les champs de données peuvent être différents de ceux présents dans les exports de l'application OISON (*i.e* champs manquants). Une vue simplifiée et facilement utilisable a été priviligée ! 
 
-  3. Filtrage des données
+####  3. Filtrage des données
 
-Pour extraire les observations taxons correspondant aux écrevisses observées en 2023, il suffit de réaliser un filtrage à partir (i) de la colonne `nom_vernaculaire` et (ii) de la nouvelle colonne `annee` (créée à partir colonne `date`) :
+Pour extraire les observations taxons correspondant aux écrevisses observées en 2023, il suffit de réaliser un filtrage à partir (i) de la colonne `nom_vernaculaire` et (ii) de la nouvelle colonne `annee` (créée à partir de la colonne `date`) :
 
 ```{r, eval=FALSE}
 oison_BZH_ecrevisse_2023 <-
@@ -103,7 +103,7 @@ oison_BZH_ecrevisse_2023 <-
   dplyr::filter(annee == 2023)
 ```
 
-  4. Visualisation des données
+#### 4. Visualisation des données
   
 Pour une réutilisation en analyse spatiale, la colonne `geometry` doit être convertie au format `sf` (*simple features*) avec la fonction `st_as_sf()` du package `sf`.
 
@@ -138,9 +138,10 @@ oison_BZH_ecrevisse_2023_sf %>%
 # mapview::mapview(oison_BZH_ecrevisse_2023_sf, legend = FALSE)
 ```
 
-  5. Export des données
+#### 5. Export des données
 
-L'export sous différents formats est possible, dont le format *geopackage* `gpkg` pour une réutilisation sous SIG. 
+L'export sous différents formats est possible, dont le format *geopackage* `.gpkg` pour une réutilisation sous SIG.
+
 > Le format `gpkg` permet de conserver dans le même objet les différents types de géométries pouvant se retrouver dans OISON (points, polygones, lignes, ...).
 
 ```{r, eval=FALSE}
