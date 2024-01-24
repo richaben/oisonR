@@ -91,6 +91,8 @@
 <div class="section level3">
 <h3 id="chargement-des-packages">Chargement des packages<a class="anchor" aria-label="anchor" href="#chargement-des-packages"></a>
 </h3>
+<p>Quelques packages sont nécessaires pour exécuter les exemples
+ci-dessous.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/richaben/oisonR" class="external-link">oisonR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
@@ -99,27 +101,34 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MaelTheuliere/COGiter" class="external-link">COGiter</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="les-observations-taxons">Les <em>observations taxons</em><a class="anchor" aria-label="anchor" href="#les-observations-taxons"></a>
+<h3 id="les-observations-taxons">Les observations taxons<a class="anchor" aria-label="anchor" href="#les-observations-taxons"></a>
 </h3>
-<p>La fonction <code><a href="../reference/get_table_taxon_sql.html">get_table_taxon_sql()</a></code> permet de récupérer
-les données d’<em>observations taxons</em> de la base SQL OISON. Avant
-de l’utiliser, il faut initier la connexion à la base de données avec la
-fonction <code>init_connexion_sql()</code> (et s’assurer de disposer des
-paramètres de configuration). Après requête, la fermeture de la
-connexion est conseillé avec la fonction
-<code><a href="../reference/stop_sql_connexion.html">stop_sql_connexion()</a></code>.</p>
-<p>Par défaut, l’ensemble des observations est récupéré, sauf si une
-géométrie est précisée en argument dans la fonction.</p>
-<blockquote>
-<p><em>L’exemple ci-dessous présente le cas d’un export sur les
-observations taxons réalisés en Bretagne</em>.</p>
-</blockquote>
+<p>Les <em>observations taxons</em> de OISON sont récupérables avec la
+fonction <code><a href="../reference/get_table_taxon_sql.html">get_table_taxon_sql()</a></code>. Avant son utilisation, il
+faut toutefois :</p>
 <ul>
-<li>Création d’une géométrie pour la Bretagne :</li>
+<li>s’assurer de disposer des paramètres de connexion à la base SQL
+(<em>cf</em>. la vignette <code>oisonR</code> pour plus de détails)
+;</li>
+<li>puis, initier la connexion à la base de données avec la fonction
+<code>init_connexion_sql()</code>.</li>
 </ul>
+<p>La fonction permet de récupérer l’ensemble des observations de la
+base, sauf si une géométrie est précisée en argument (argument
+<code>geometrie</code> dans la fonction).</p>
+<p>Après récupération des données, il est conseillé de stopper la
+connexion à la base avec la fonction
+<code><a href="../reference/stop_sql_connexion.html">stop_sql_connexion()</a></code>.</p>
+<div class="section level4">
+<h4 id="exemple-pour-réaliser-un-export-des-observations-taxons-sur-les-écrevisses-en-bretagne-pour-lannée-2023">Exemple pour réaliser un export des observations taxons sur les
+écrevisses en Bretagne pour l’année 2023<a class="anchor" aria-label="anchor" href="#exemple-pour-r%C3%A9aliser-un-export-des-observations-taxons-sur-les-%C3%A9crevisses-en-bretagne-pour-lann%C3%A9e-2023"></a>
+</h4>
+<ol style="list-style-type: decimal">
+<li>Création d’une géométrie pour la Bretagne</li>
+</ol>
 <p>Le package R <code>COGiter</code> peut être utilisé pour créer
-simplement une géométrie et la convertir en chaîne de caractères
-utilisable pour la requête SQL.</p>
+récupérer la géométrie de la région et la convertir ensuite en chaîne de
+caractères qui sera utilisée pour effectuer la requête.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">geom_BZH</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">COGiter</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/COGiter/man/regions_geo_xx.html" class="external-link">regions_geo</a></span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -131,72 +140,90 @@ utilisable pour la requête SQL.</p>
 <p>Le début de la géométrie ressemble à cela : MULTIPOLYGON (((267337.9
 6730985, 269412.2 6732332, 269637.9 6734259, 270864.3 6735502, 270508.8
 673…..</p>
-<ul>
-<li>Requête observations taxons :</li>
-</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Récupération des données <em>observations taxons</em>
+</li>
+</ol>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># initialisation de la connexion</span></span>
+<code class="sourceCode R"><span><span class="co"># a) connexion</span></span>
 <span><span class="va">bdd_oison</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/start_sql_connexion.html">start_sql_connexion</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># requete</span></span>
+<span><span class="co"># b) requete</span></span>
 <span><span class="va">oison_BZH</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu"><a href="../reference/get_table_taxon_sql.html">get_table_taxon_sql</a></span><span class="op">(</span>conn <span class="op">=</span> <span class="va">bdd_oison</span>,</span>
 <span>                      geometrie <span class="op">=</span> <span class="va">geom_BZH</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># stop de la connexion</span></span>
+<span><span class="co"># d) stop de la connexion</span></span>
 <span><span class="fu"><a href="../reference/stop_sql_connexion.html">stop_sql_connexion</a></span><span class="op">(</span>conn <span class="op">=</span> <span class="va">bdd_oison</span><span class="op">)</span></span></code></pre></div>
 <p>Le résultat de la requête est un objet de type
-<code>data.frame</code>. Les noms de colonnes sont les suivants :</p>
+<code>data.frame</code>. Les noms de colonnes peuvent être obtenus de la
+façon suivante :</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oison_BZH</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>A noter, qu’il s’agit ici d’une vue simplifiée par rapport à ce qu’il
-est possible d’exporter directement dans l’application OISON (les
-exports et formats d’exports de l’application OISON n’étant pas
-satisfaisants). Ici, le format est directement exploitable et
-manipulable pour valorisation ultérieure.</p>
-<p>Par exemple, si l’on souhaite extraire les taxons correspondant aux
-écrevisses observées sur l’année 2023, il suffit de faire :</p>
+<blockquote>
+<p>⚠️ <strong>A noter</strong> que certains champs de données présents
+dans les exports via l’application OISON ne sont pas présents dans ces
+exports avec ce package. Il s’agit ici d’une vue simplifiée et
+utilisable directement.</p>
+</blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>Filtrage des données</li>
+</ol>
+<p>Pour extraire les observations taxons correspondant aux écrevisses
+observées en 2023, il suffit de réaliser un filtrage à partir (i) de la
+colonne <code>nom_vernaculaire</code> et (ii) de la nouvelle colonne
+<code>annee</code> (créée à partir colonne <code>date</code>) :</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oison_BZH_ecrevisse_2023</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">oison_BZH</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="co"># detect pattern 'creviss' and filter</span></span>
+<span>  <span class="co"># detection pattern 'creviss' et filtre</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">'creviss'</span>, <span class="va">nom_vernaculaire</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># création colonne annee</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>annee <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">date</span>, <span class="st">'%Y'</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># filtre sur annee 2023</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">annee</span> <span class="op">==</span> <span class="fl">2023</span><span class="op">)</span></span></code></pre></div>
+<ol start="4" style="list-style-type: decimal">
+<li>Visualisation des données</li>
+</ol>
 <p>Pour une réutilisation en analyse spatiale, la colonne
-<code>geometry</code> peut facilement être convertie au format
-<code>sf</code> (<em>simple features</em>) avec la fonction
-<code><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">sf::st_as_sf()</a></code>.</p>
+<code>geometry</code> doit être convertie au format <code>sf</code>
+(<em>simple features</em>) avec la fonction <code><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf()</a></code> du
+package <code>sf</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oison_BZH_ecrevisse_2023_sf</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">oison_BZH_ecrevisse_2023</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Les représentations interactives sont possibles (<em>à noter que dans
-l’exemple ci-dessous il ne s’agit pas des vraies données… floutage
-!</em> 🕶) :</p>
+<p>Avec cet objet, les visualisations interactives sont possibles (<em>à
+noter que dans l’exemple ci-dessous il ne s’agit pas des vraies données…
+floutage !</em> 🕶) avec le package <code>mapview</code> :</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oison_BZH_ecrevisse_2023_sf</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">mapview</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html" class="external-link">mapview</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>L’export au format <em>geopackage</em> <code>gpkg</code> est possible
-pour une réutilisation sous SIG. Les géométries sont conservées, et
-c’est important car différents types peuvent être saisis dans OISON
-(point, polygones, polylignes, …).</p>
+<ol start="5" style="list-style-type: decimal">
+<li>Export des données</li>
+</ol>
+<p>L’export sous différents formats est possible, dont le format
+<em>geopackage</em> <code>gpkg</code> pour une réutilisation sous SIG.
+&gt; Le format <code>gpkg</code> permet de conserver dans le même objet
+les différents types de géométries pouvant se retrouver dans OISON
+(points, polygones, lignes, …).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_write.html" class="external-link">write_sf</a></span><span class="op">(</span><span class="va">oison_BZH_ecrevisse_2023_sf</span>, </span>
 <span>             <span class="st">"D:/oison_BZH_ecrevisse_2023.gpkg"</span>, </span>
 <span>             driver <span class="op">=</span> <span class="st">"GPKG"</span><span class="op">)</span></span></code></pre></div>
 </div>
+</div>
 <div class="section level3">
-<h3 id="les-observations-milieu">Les <em>observations milieu</em><a class="anchor" aria-label="anchor" href="#les-observations-milieu"></a>
+<h3 id="les-observations-milieu">Les observations milieu<a class="anchor" aria-label="anchor" href="#les-observations-milieu"></a>
 </h3>
-<p>TO BE CONTINUED… 🛠</p>
+<p>TO COMPLETE… 🛠</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="récupérer-les-données-via-lapi">Récupérer les données via l’API<a class="anchor" aria-label="anchor" href="#r%C3%A9cup%C3%A9rer-les-donn%C3%A9es-via-lapi"></a>
 </h2>
-<p>TO BE CONTINUED… 🛠</p>
+<p>TO COMPLETE… 🛠</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>Sur cette page</h2>
     </nav></aside>

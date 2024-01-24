@@ -84,22 +84,31 @@
 <!-- badges: start -->
 
 <p><a href="https://oison.ofb.fr/" class="external-link">OISON</a> est un outil de saisies naturalistes pour les agents de l’<a href="https://www.ofb.gouv.fr/" class="external-link">Office français de la biodiversité (OFB)</a>. Il permet de collecter des données relatives aux espèces et aux milieux, qui sont majoritairement issues d’observations opportunistes, fortuites ou protocolées. L’accès à l’outil est restreint et nécessite un compte utilisateur (<em>création de compte nécessaire avant connexion</em>).</p>
-<p>Ce package a été développé pour faciliter l’accès aux données bancarisées dans OISON, et doit permettre leur ré-utilisation dans le cadre de projets de valorisation (téléchargement des données à partir de différentes sources, et leur mise en forme dans des formats exploitables).</p>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
-<p>La version de développement sur <a href="https://github.com/" class="external-link">GitHub</a> :</p>
+<p>Ce package a été développé pour faciliter l’accès aux données bancarisées dans <a href="https://oison.ofb.fr/" class="external-link">OISON</a>, et ainsi permettre leur ré-utilisation dans le cadre de projets de valorisation (<em>téléchargement des données et leur mise en forme dans des formats exploitables</em>).</p>
+<div class="section level3">
+<h3 id="installation-et-chargement">Installation et chargement<a class="anchor" aria-label="anchor" href="#installation-et-chargement"></a>
+</h3>
+<p>La version de développement sur <a href="https://github.com/" class="external-link">GitHub</a> (<em>installer le package <code>devtools</code> si nécessaire</em>).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"richaben/oisonR"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="exemple">Exemple<a class="anchor" aria-label="anchor" href="#exemple"></a>
-</h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"richaben/oisonR"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>Pour charger le package <code>oisonR</code> :</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## basic example code</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/richaben/oisonR" class="external-link">oisonR</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/richaben/oisonR" class="external-link">oisonR</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="vignettes--documentation">Vignettes / Documentation<a class="anchor" aria-label="anchor" href="#vignettes--documentation"></a>
+</h3>
+<p>Quelques vignettes sont disponibles pour l’utilisation du package :</p>
+<ul>
+<li><a href="https://richaben.github.io/oisonR/articles/bien-demarrer-avec-oisonR.html">Bien démarrer avec le package <code>oisonR</code></a></li>
+<li><a href="https://richaben.github.io/oisonR/articles/comment-utiliser-oisonR.html">Comment utiliser le package <code>oisonR</code> ?</a></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="issues--bugs">Issues / Bugs<a class="anchor" aria-label="anchor" href="#issues--bugs"></a>
+</h3>
+<p>Pour signaler un bug, une erreur ou une suggestion, merci d’utiliser les issues sur le <a href="%22https://github.com/richaben/oisonR/issues%22" class="external-link">dépôt GitHub</a> du package.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="liens">
