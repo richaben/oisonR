@@ -49,4 +49,4 @@ Quelques vignettes sont disponibles pour l'utilisation du package :
 
 ### Issues / Bugs
 
-Pour signaler un bug, une erreur ou une suggestion, merci d'utiliser les issues sur le [dépôt GitHub]("https://github.com/richaben/oisonR/issues") du package.
+Pour signaler un bug, une erreur ou une suggestion, merci d'utiliser les issues sur le [dépôt GitHub](https://github.com/richaben/oisonR/issues) du package.

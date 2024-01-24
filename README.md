@@ -26,8 +26,8 @@ des données et leur mise en forme dans des formats exploitables*).
 
 ### Installation et chargement
 
-La version de développement sur [GitHub](https://github.com/)
-(*installer le package `devtools` si nécessaire*).
+La version de développement sur [GitHub](https://github.com/) (*le
+package* `devtools` *est à installer si nécessaire*).
 
 ``` r
 # install.packages("devtools")
@@ -52,5 +52,5 @@ Quelques vignettes sont disponibles pour l’utilisation du package :
 ### Issues / Bugs
 
 Pour signaler un bug, une erreur ou une suggestion, merci d’utiliser les
-issues sur le [dépôt
-GitHub](%22https://github.com/richaben/oisonR/issues%22) du package.
+issues sur le [dépôt GitHub](https://github.com/richaben/oisonR/issues)
+du package.
