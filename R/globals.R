@@ -111,6 +111,7 @@ globalVariables(unique(
     "parentCode",
     # get_table_taxon_sql:
     "con",
+    "ST_Intersects",
     "localisation_id",
     "observation_milieu_id",
     "presence",
