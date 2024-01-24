@@ -32,7 +32,7 @@ observations sur les taxons sur la zone géographique spécifiée par la géomé
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/comment-utiliser-oisonR.html">Comment utiliser le package oisonR ?</a>
+    <a class="dropdown-item" href="../articles/bien-demarrer-avec-oisonR.html">Bien démarrer avec le package oisonR</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -76,11 +76,12 @@ observations sur les taxons sur la zone géographique spécifiée par la géomé
 
 
 <dt>geometrie</dt>
-<dd><p>chaîne de caractères. Elle est utilisée pour la requête SQL pour
+<dd><p>chaîne de caractères.
+ Elle est utilisée pour la requête SQL pour
 filtrer les données.
-La géométrie doit être sous la forme d'une chaîne de caractères
-(ex. "POLYGON((x1 y1, x2 y2, x3 y3, x4 y4, x1 y1))"
-Sa projection doit être en RGF93 / Lambert-93 (EPSG=2154).</p></dd>
+ La géométrie doit être sous la forme d'une chaîne de caractères
+(ex. "POLYGON((x1 y1, x2 y2, x3 y3, x4 y4, x1 y1))".
+ Sa projection doit être en RGF93 / Lambert-93 (EPSG=2154).</p></dd>
 
 
 <dt>...</dt>
@@ -97,6 +98,7 @@ Sa projection doit être en RGF93 / Lambert-93 (EPSG=2154).</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Exemples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co">### ------------- ###</span></span></span>
 <span class="r-in"><span><span class="co">## Exemple 1. Export sans géométrie</span></span></span>
 <span class="r-in"><span><span class="va">bdd_oison</span> <span class="op">&lt;-</span> <span class="fu"><a href="start_sql_connexion.html">start_sql_connexion</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -108,14 +110,16 @@ Sa projection doit être en RGF93 / Lambert-93 (EPSG=2154).</p></dd>
 <span class="r-in"><span><span class="co">## Exemple 2. Export avec géométrie spécifiée</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># a) créer une géométrie</span></span></span>
+<span class="r-in"><span><span class="co"># devtools::install_github("MaelTheuliere/COGiter")</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">geom_normandie</span> <span class="op">&lt;-</span></span></span>
-<span class="r-in"><span><span class="fu">COGiter</span><span class="fu">::</span><span class="va">regions_geo</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">COGiter</span><span class="fu">::</span><span class="va">regions_geo</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">REG</span> <span class="op">==</span> <span class="fl">28</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="co"># convert to text</span></span></span>
 <span class="r-in"><span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_text.html" class="external-link">st_as_text</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># b) faire la requête</span></span></span>
 <span class="r-in"><span><span class="va">bdd_oison</span> <span class="op">&lt;-</span> <span class="fu"><a href="start_sql_connexion.html">start_sql_connexion</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">df_taxon_oison_sql_normandie</span> <span class="op">&lt;-</span></span></span>
