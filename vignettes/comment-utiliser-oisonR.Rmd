@@ -59,7 +59,7 @@ Le début de la géométrie ressemble à cela :
 
   - Requête observations taxons :
 
-```{r, eval=T, message=FALSE, warning=FALSE}
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
 # initialisation de la connexion
 bdd_oison <- start_sql_connexion()
 
@@ -74,7 +74,7 @@ stop_sql_connexion(conn = bdd_oison)
 
 Le résultat de la requête est un objet de type `data.frame`. Les noms de colonnes sont les suivants :
 
-```{r}
+```{r, eval=FALSE}
 oison_BZH %>% 
   names()
 ```
@@ -108,21 +108,21 @@ oison_BZH_ecrevisse_2023_sf %>%
 ```
 
 ```{r, echo=FALSE}
-oison_BZH_ecrevisse_2023 <-
-  oison_BZH %>% 
-  # detect pattern 'creviss' and filter
-  dplyr::filter(grepl('creviss', nom_vernaculaire)) %>% 
-  dplyr::mutate(annee = format(date, '%Y')) %>% 
-  dplyr::filter(annee == 2023)
-
-oison_BZH_ecrevisse_2023_sf <-
-  oison_BZH_ecrevisse_2023 %>% 
-  sf::st_as_sf() %>% 
-  dplyr::mutate(row = paste('id',row_number())) %>% 
-  dplyr::select(row) %>% 
-  sf::st_jitter(factor = .05)
-
-mapview::mapview(oison_BZH_ecrevisse_2023_sf, legend = FALSE)
+# oison_BZH_ecrevisse_2023 <-
+#   oison_BZH %>% 
+#   # detect pattern 'creviss' and filter
+#   dplyr::filter(grepl('creviss', nom_vernaculaire)) %>% 
+#   dplyr::mutate(annee = format(date, '%Y')) %>% 
+#   dplyr::filter(annee == 2023)
+# 
+# oison_BZH_ecrevisse_2023_sf <-
+#   oison_BZH_ecrevisse_2023 %>% 
+#   sf::st_as_sf() %>% 
+#   dplyr::mutate(row = paste('id',row_number())) %>% 
+#   dplyr::select(row) %>% 
+#   sf::st_jitter(factor = .05)
+# 
+# mapview::mapview(oison_BZH_ecrevisse_2023_sf, legend = FALSE)
 ```
 
 L'export au format *geopackage* `gpkg` est possible pour une réutilisation sous SIG. Les géométries sont conservées, et c'est important car différents types peuvent être saisis dans OISON (point, polygones, polylignes, ...).
