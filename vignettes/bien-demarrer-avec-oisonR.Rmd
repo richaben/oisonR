@@ -1,8 +1,8 @@
 ---
-title: "Comment utiliser le package oisonR ?"
+title: "Bien démarrer avec le package oisonR"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Comment utiliser le package oisonR ?}
+  %\VignetteIndexEntry{Bien démarrer avec le package oisonR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
