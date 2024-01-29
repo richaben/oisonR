@@ -36,7 +36,7 @@ Avec ce package, l'accès aux données [OISON](https://oison.ofb.fr/) peut se fa
 
 -   par la base de données SQL. Cela nécessite d'obtenir les paramètres de connexion à la base au préalable, et une connexion au réseau interne de l'OFB (ou au VPN). Par ce moyen, les données accessibles sont datées à J-1 sur une copie de la base (*en lecture seule*). Ici, un volume important de données peut être téléchargé (*plus rapidement que par l'API*).
 
-> **Conseil** : *Certaines fonctions du package exigent donc des paramètres particuliers pour l'accès aux données (par exemple login, mot de passe, etc...). Pour ne pas saisir ces paramètres à chaque utilisation, il est conseillé de stocker ces éléments directement dans l’environnement `R`* (*cf. procédure ci-dessous*).
+> 💡 *Certaines fonctions du package exigent donc des paramètres particuliers pour l'accès aux données (par exemple login, mot de passe, etc...). Pour ne pas saisir ces paramètres à chaque utilisation, il est conseillé de stocker ces éléments directement dans l’environnement `R`* (*cf. procédure ci-dessous*).
 
 Deux fonctions utiles sont disponibles pour vérifier si les informations de connexion sont bien stockées dans l'environnement `R` :
 

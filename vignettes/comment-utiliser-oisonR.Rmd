@@ -90,7 +90,7 @@ oison_BZH %>%
 knitr::include_graphics("./img/oison_table_taxons_variables.png")
 ```
 
-> ⚠️ A noter qu'ici les champs de données peuvent être différents de ceux présents dans les exports de l'application OISON (*i.e* champs manquants). Une vue simplifiée et facilement utilisable a été priviligée ! 
+> ⚠️ A noter qu'ici les champs de données peuvent être différents de ceux présents dans les exports de l'application OISON* (*i.e* *champs manquants). Une vue simplifiée et facilement utilisable a été priviligée ! 
 
 ####  3. Filtrage des données
 
@@ -150,7 +150,7 @@ knitr::include_graphics("./img/oison_exemple_ecrevisses_bzh.png")
 
 L'export sous différents formats est possible, dont le format *geopackage* `.gpkg` pour une réutilisation sous SIG.
 
-> Le format `gpkg` permet de conserver dans le même objet les différents types de géométries pouvant se retrouver dans OISON (points, polygones, lignes, ...).
+> 💡 Le format `gpkg` permet de conserver dans le même objet les différents types de géométries pouvant se retrouver dans OISON (points, polygones, lignes, ...).
 
 ```{r, eval=FALSE}
 sf::write_sf(oison_BZH_ecrevisse_2023_sf, 
