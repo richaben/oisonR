@@ -1,5 +1,5 @@
 ---
-title: "Comment utiliser le package oisonR ?"
+title: "2. Comment utiliser le package oisonR ?"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{2. Comment utiliser le package oisonR ?}
@@ -86,6 +86,10 @@ oison_BZH %>%
   names()
 ```
 
+```{r varnames, echo=FALSE, out.width="200%"}
+knitr::include_graphics("./img/oison_table_taxons_variables.png")
+```
+
 > ⚠️ A noter qu'ici les champs de données peuvent être différents de ceux présents dans les exports de l'application OISON (*i.e* champs manquants). Une vue simplifiée et facilement utilisable a été priviligée ! 
 
 ####  3. Filtrage des données
@@ -113,11 +117,15 @@ oison_BZH_ecrevisse_2023_sf <-
   sf::st_as_sf()
 ```
 
-Avec cet objet, les visualisations interactives sont possibles (*à noter que dans l'exemple ci-dessous il ne s'agit pas des vraies données... floutage !* 🕶) avec le package `mapview` :
+Avec cet objet, les visualisations interactives sont possibles (*à noter qu'il ne s'agit pas des vraies données dans l'exemple ci-dessous...* 🕶) avec le package `mapview` :
 
 ```{r, eval=FALSE, fig.width=4, fig.height=4}
 oison_BZH_ecrevisse_2023_sf %>% 
   mapview::mapview()
+```
+
+```{r exemple_mapview, echo=FALSE, out.width="200%"}
+knitr::include_graphics("./img/oison_exemple_ecrevisses_bzh.png")
 ```
 
 ```{r, echo=FALSE}

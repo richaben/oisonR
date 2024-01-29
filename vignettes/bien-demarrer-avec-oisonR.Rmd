@@ -1,5 +1,5 @@
 ---
-title: "Bien démarrer avec le package oisonR"
+title: "1. Bien démarrer avec le package oisonR"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{1. Bien démarrer avec le package oisonR}
