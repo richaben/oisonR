@@ -3,7 +3,7 @@
 export("%>%")
 export(check_acces_oison_api)
 export(check_acces_oison_sql)
-export(get_milieu_taxon_sql)
+export(get_table_milieu_sql)
 export(get_table_taxon_sql)
 export(get_taxon_dpt)
 export(get_taxon_polygon)

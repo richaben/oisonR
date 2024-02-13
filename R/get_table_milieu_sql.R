@@ -28,7 +28,7 @@
 #' ## Exemple 1. Export sans géométrie
 #' bdd_oison <- start_sql_connexion()
 #'
-#' df_milieu_oison_sql <- get_milieu_taxon_sql(conn = bd_oison)
+#' df_milieu_oison_sql <- get_table_milieu_sql(conn = bd_oison)
 #'
 #' stop_sql_connexion(conn = bdd_oison)
 #'
@@ -48,12 +48,12 @@
 #' bdd_oison <- start_sql_connexion()
 #'
 #' df_taxon_milieu_sql_normandie <-
-#' get_milieu_taxon_sql(conn = bdd_oison, geometrie = geom_normandie)
+#' get_table_milieu_sql(conn = bdd_oison, geometrie = geom_normandie)
 #'
 #' stop_sql_connexion(conn = bdd_oison)
 #' }
 #'
-get_milieu_taxon_sql <-
+get_table_milieu_sql <-
   function(conn, geometrie, ...) {
 
     { if (!missing(geometrie)) {

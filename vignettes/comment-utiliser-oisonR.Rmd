@@ -87,7 +87,7 @@ oison_BZH %>%
 ```
 
 ```{r varnames, echo=FALSE, out.width="200%"}
-knitr::include_graphics("./img/oison_table_taxons_variables.png")
+knitr::include_graphics("../man/figures/oison_table_taxons_variables.png")
 ```
 
 > ⚠️ A noter qu'ici les champs de données peuvent être différents de ceux présents dans les exports de l'application OISON* (*i.e* *champs manquants). Une vue simplifiée et facilement utilisable a été priviligée ! 
@@ -125,7 +125,7 @@ oison_BZH_ecrevisse_2023_sf %>%
 ```
 
 ```{r exemple_mapview, echo=FALSE, out.width="200%"}
-knitr::include_graphics("./img/oison_exemple_ecrevisses_bzh.png")
+knitr::include_graphics("../man/figures/oison_exemple_ecrevisses_bzh.png")
 ```
 
 ```{r, echo=FALSE}
