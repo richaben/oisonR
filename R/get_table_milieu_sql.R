@@ -19,7 +19,7 @@
 #' @export
 #'
 #' @importFrom dbplyr in_schema
-#' @importFrom dplyr tbl filter rename left_join right_join select collect mutate
+#' @importFrom dplyr tbl filter rename left_join inner_join select collect mutate
 #' @importFrom sf st_as_sfc
 #'
 #' @examples
@@ -81,7 +81,7 @@ get_table_milieu_sql <-
         }
     } %>%
     # join to data observations milieu
-      dplyr::right_join(
+      dplyr::inner_join(
     dplyr::tbl(conn, dbplyr::in_schema("data", "observation")) %>%
       dplyr::filter(type == 'milieu') %>%
       dplyr::rename(observation_id = id,
