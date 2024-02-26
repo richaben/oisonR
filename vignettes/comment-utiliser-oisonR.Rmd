@@ -35,7 +35,7 @@ library(COGiter)
 Les *observations taxons* de [OISON](https://oison.ofb.fr/) sont récupérables avec la fonction `get_table_taxon_sql()`. Avant son utilisation, il faut toutefois : 
 
   - s'assurer de disposer des paramètres de connexion à la base SQL (*cf*. la vignette `oisonR` pour plus de détails) ;
-  - puis, initier la connexion à la base de données avec la fonction `init_connexion_sql()`.
+  - puis, initier la connexion à la base de données avec la fonction `start_sql_connexion()`.
 
 La fonction permet de récupérer l'ensemble des observations de la base, sauf si une géométrie est précisée en argument (argument `geometrie` dans la fonction).
 
