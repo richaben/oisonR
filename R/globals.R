@@ -124,7 +124,8 @@ globalVariables(unique(
     "fonction_observee",
     "impact_situation",
     "milieu_impact",
-    "perturbation"
+    "perturbation",
+    "url_esp_hab"
   )
 ))
 
