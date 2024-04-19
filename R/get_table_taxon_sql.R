@@ -57,6 +57,9 @@ get_table_taxon_sql <-
   function(conn, geometrie, ...) {
 
     { if (!missing(geometrie)) {
+
+      req <- glue::glue('SRID=2154;{geometrie}')
+
       dplyr::tbl(conn, dbplyr::in_schema("data", "localisation")) %>%
         dplyr::select(
           localisation_id = id,
@@ -67,7 +70,7 @@ get_table_taxon_sql <-
           surface_station,
           longueur_troncon
         ) %>%
-        dplyr::filter(ST_Intersects(geometry, glue::glue('SRID=2154;{geometrie}'))) } else {
+        dplyr::filter(ST_Intersects(geometry, req)) } else {
           dplyr::tbl(conn, dbplyr::in_schema("data", "localisation")) %>%
             dplyr::select(
               localisation_id = id,
