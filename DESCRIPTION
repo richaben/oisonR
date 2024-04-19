@@ -1,7 +1,7 @@
 Type: Package
 Package: oisonR
 Title: R Package pour collecter et utiliser les données OISON
-Version: 0.1.0
+Version: 0.1.0.9000
 Author: Benoit Richard <benoit.richard@ofb.gouv.fr>
 Maintainer: Benoit Richard <benoit.richard@ofb.gouv.fr>
 Description: Ensemble de fonctions pour utiliser les données bancarisées
