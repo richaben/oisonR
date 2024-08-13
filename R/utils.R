@@ -222,7 +222,37 @@ extract_requete <- function(requete_df) {
     left_join(part_localisation) %>%
     suppressMessages() %>%
     dplyr::mutate(cd_ref = as.numeric(cd_ref),
-                  parentCode = as.numeric(parentCode))
+                  parentCode = as.numeric(parentCode)) %>%
+    dplyr::select(
+      observation_id = id,
+      observation_type = type,
+      nom = obs_nom,
+      prenom = obs_prenom,
+      email = obs_mail,
+      date,
+      heure = time,
+      nom_vernaculaire,
+      nom_scientifique,
+      presence,
+      status = statut_obs,
+      cd_nom = cd_ref,
+      regne,
+      rang,
+      type_recherche,
+      contexte_recherche,
+      objectif_recherche = obj_recherche,
+      commentaire,
+      stade_developpement = std_dvpt,
+      nombre_individu = nbInd,
+      geometry,
+      x_point = xPoint,
+      y_point = yPoint,
+      commune_label,
+      commune_inseeComm,
+      region_nom,
+      region_code,
+      uuid
+    )
 }
 
 
