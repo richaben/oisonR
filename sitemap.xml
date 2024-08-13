@@ -1,72 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://richaben.github.io/oisonR/404.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/articles/bien-demarrer-avec-oisonR.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/articles/comment-utiliser-oisonR.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/index.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/check_acces_oison_api.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/check_acces_oison_sql.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/get_table_milieu_sql.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/get_table_taxon_sql.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/get_taxon_dpt.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/get_taxon_polygon.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/get_taxon_region.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/imp_importer_dump_oison.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/imp_inpn_habitats_taxon.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/imp_inpn_maille_taxon.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/mef_dump_creer_table_taxon.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/oisonR-package.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/outil_selection_zone.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/start_sql_connexion.html</loc>
-  </url>
-  <url>
-    <loc>https://richaben.github.io/oisonR/reference/stop_sql_connexion.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://richaben.github.io/oisonR/404.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/articles/bien-demarrer-avec-oisonR.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/articles/comment-utiliser-oisonR.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/articles/index.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/authors.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/index.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/check_acces_oison_api.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/check_acces_oison_sql.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/get_table_milieu_sql.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/get_table_taxon_sql.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/get_taxon_dpt.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/get_taxon_polygon.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/get_taxon_region.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/imp_importer_dump_oison.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/imp_inpn_habitats_taxon.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/imp_inpn_maille_taxon.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/index.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/mef_dump_creer_table_taxon.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/oisonR-package.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/outil_selection_zone.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/pipe.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/start_sql_connexion.html</loc></url>
+<url><loc>https://richaben.github.io/oisonR/reference/stop_sql_connexion.html</loc></url>
 </urlset>
+
