@@ -318,17 +318,18 @@ façon suivante :</p>
 <p>Cette fonction permet de consulter/récupérer (selon l’argument
 <code>collect_all = FALSE</code> ou <code>collect_all = TRUE</code>) les
 données sur une zone géographique définie par un polygone. Spécifier une
-plage de date est également possible. Le polygone peut être :</p>
+plage de date est également possible.</p>
+<p>Le polygone peut :</p>
 <ul>
-<li>écrit manuellement ;</li>
+<li>s’écrire manuellement sous cette forme ;</li>
 </ul>
 <pre><code><span><span class="co">#&gt; [1] "POLYGON ((410677.9 6877209, 413275.2 6929083, 496961.8 6925506, 495122.6 6873600, 410677.9 6877209))"</span></span></code></pre>
 <ul>
-<li>tracé à la volée lorsque l’argument <code>draw_zone = TRUE</code>
-est spécifié dans la fonction. Dès lors, un outil de sélection de zone
-s’ouvre (via une fenêtre interactive <code>shiny</code>) permettant le
-traçage du polygone et son. La forme stockage dans l’environnement de
-travail pour la requête.</li>
+<li>se tracer à la volée lorsque l’argument
+<code>draw_zone = TRUE</code> est spécifié dans la fonction. Dès lors,
+un outil de sélection de zone s’ouvre (via une fenêtre interactive
+<code>shiny</code> ; cf. ci-dessous) permettant le traçage du polygone
+et son stockage dans l’environnement de travail pour la requête.</li>
 </ul>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_taxon_polygon.html">get_taxon_polygon</a></span><span class="op">(</span></span>
