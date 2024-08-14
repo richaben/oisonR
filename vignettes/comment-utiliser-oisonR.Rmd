@@ -251,15 +251,17 @@ knitr::include_graphics("../man/figures/oison_api_taxons_variables.png")
 
 ### Exemple avec la fonction `get_taxon_polygon()`
 
-Cette fonction permet de consulter/récupérer (selon l'argument `collect_all = FALSE` ou `collect_all = TRUE`) les données sur une zone géographique définie par un polygone. Spécifier une plage de date est également possible. Le polygone peut être :
+Cette fonction permet de consulter/récupérer (selon l'argument `collect_all = FALSE` ou `collect_all = TRUE`) les données sur une zone géographique définie par un polygone. Spécifier une plage de date est également possible. 
 
-  - écrit manuellement ;
+Le polygone peut :
+
+  - s'écrire manuellement sous cette forme ;
 
 ```{r, echo=FALSE}
 "POLYGON ((410677.9 6877209, 413275.2 6929083, 496961.8 6925506, 495122.6 6873600, 410677.9 6877209))"
 ```
 
-  - tracé à la volée lorsque l'argument `draw_zone = TRUE` est spécifié dans la fonction. Dès lors, un outil de sélection de zone s'ouvre (via une fenêtre interactive `shiny`) permettant le traçage du polygone et son. La forme stockage dans l'environnement de travail pour la requête.
+  - se tracer à la volée lorsque l'argument `draw_zone = TRUE` est spécifié dans la fonction. Dès lors, un outil de sélection de zone s'ouvre (via une fenêtre interactive `shiny` ; cf. ci-dessous) permettant le traçage du polygone et son stockage dans l'environnement de travail pour la requête.
   
 ```{r, eval=FALSE}
 get_taxon_polygon(
