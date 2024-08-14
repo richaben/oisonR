@@ -45,7 +45,7 @@ Après récupération des données, il est conseillé de stopper la connexion à
 
 #### 1. Création d'une géométrie pour la Bretagne
 
-Le package `COGiter` peut être utilisé pour récupérer la géométrie correspondant à la région, et la convertir en chaîne de caractères pour effectuer la requête.
+Le package `COGiter` peut être utilisé pour récupérer la géométrie correspondant à la région, et la convertir en chaîne de caractères utilisables pour la requête spatiale.
 
 ```{r}
 geom_BZH <-
@@ -93,7 +93,7 @@ knitr::include_graphics("../man/figures/oison_table_taxons_variables.png")
 
 #### 3. Filtrage des données
 
-Pour extraire les observations taxons correspondant aux écrevisses observées en 2023, il suffit de réaliser un filtrage à partir (i) de la colonne `nom_vernaculaire` et (ii) de la nouvelle colonne `annee` (créée à partir de la colonne `date`) :
+Pour extraire les *observations taxons* correspondant aux écrevisses datées de 2023, il suffit de réaliser un filtrage à partir (i) de la colonne `nom_vernaculaire` et (ii) de la nouvelle colonne `annee` (créée à partir de la colonne `date`) :
 
 ```{r, eval=FALSE}
 oison_BZH_ecrevisse_2023 <-
@@ -116,7 +116,7 @@ oison_BZH_ecrevisse_2023_sf <-
   sf::st_as_sf()
 ```
 
-Avec cet objet, les visualisations interactives sont possibles (*à noter qu'il ne s'agit pas des vraies données dans l'exemple ci-dessous...* 🕶) avec le package `mapview` :
+Avec cet objet, les visualisations interactives sont possibles avec le package `mapview` (*à noter qu'il ne s'agit pas des vraies données dans l'exemple ci-dessous...* 🕶)  :
 
 ```{r, eval=FALSE, fig.width=4, fig.height=4}
 oison_BZH_ecrevisse_2023_sf %>% 
@@ -147,9 +147,9 @@ knitr::include_graphics("../man/figures/oison_exemple_ecrevisses_bzh.png")
 
 #### 5. Export des données
 
-L'export sous différents formats est possible, dont le format *geopackage* `.gpkg` pour une réutilisation sous SIG.
+L'export sous différents formats est possible, dont le format *geopackage* (`.gpkg`) pour une réutilisation sous SIG.
 
-> 💡 Le format `gpkg` permet de conserver dans le même objet les différents types de géométries pouvant se retrouver dans OISON (points, polygones, lignes, ...).
+> 💡 Le format `gpkg` permet de conserver les différents types de géométries pouvant se retrouver dans les observations OISON (points, polygones, lignes, ...).
 
 ```{r, eval=FALSE}
 sf::write_sf(oison_BZH_ecrevisse_2023_sf, 
@@ -165,6 +165,8 @@ Par défaut, la fonction permet de récupérer l'ensemble des observations de la
 
 ### Exemple pour les observations milieu pour la région Bretagne
 
+L'exemple ci-dessous correspond à une extraction des *observations milieu* sur la zone géographique de la région Bretagne, en utilisant l'objet précédemment créé (`geom_BZH` ; cf. ci-dessus) :
+
 ```{r, eval=FALSE, message=FALSE, warning=FALSE}
 # a) connexion
 bdd_oison <- start_sql_connexion()
@@ -178,7 +180,7 @@ oison_milieu_BZH <-
 stop_sql_connexion(conn = bdd_oison)
 ```
 
-Le résultat de la requête est un objet de type `data.frame`. Les noms de colonnes peuvent être obtenus de la façon suivante :
+Le résultat de la requête est de nouveau un objet de type `data.frame`. Les noms de colonnes peuvent être obtenus de la façon suivante :
 
 ```{r, eval=FALSE}
 oison_milieu_BZH %>% 
@@ -193,4 +195,84 @@ knitr::include_graphics("../man/figures/oison_table_milieu_variables.png")
 
 # Récupérer les données via l'API
 
-TO COMPLETE... 🛠
+Trois fonctions permettent de récupérer les données via une "API". Pour le moment, il n'est possible que de récupérer les *observations taxons*. Les fonctions sont les suivantes :
+
+- `get_taxon_dpt()` pour récupérer les *observations taxons* sur un département en spécifiant son code insee ;
+- `get_taxon_region()` pour récupérer les *observations taxons* sur une région en spécifiant son code insee ;
+- `get_taxon_polygon()` pour récupérer les *observations taxons* sur une zone géographique définie au préalable ou tracée à la volée avec une fonction dédiée.
+
+Avec ces 3 fonctions, il est possible de collecter les données (avec l'argument `collect_all = TRUE`) ou simplement consulter rapidement le nombre de données sur l'étendue géographique (lorsque l'argument `collect_all = FALSE`).
+
+Une période de temps peut être également spécifiée avec les arguments `date_min` et `date_max`.
+
+La récupération des données est séquencée pour limiter la surcharge de l'API.
+
+### Exemples pour le département 27 avec `get_taxon_dpt()`  
+
+#### Consultation simple sur l'année 2022 (avec `collect_all = FALSE`)
+
+```{r, eval=FALSE}
+get_taxon_dpt(
+  dpt_code = "27",
+  login = "john.doe@ofb.gouv.fr",
+  mdp = "mon_mdp",
+  date_min = '2022-01-01',
+  date_max = '2022-12-31',
+  collect_all = F)
+```
+
+```{r oison_api_dpt, echo=FALSE, out.width="80%"}
+knitr::include_graphics("../man/figures/oison_api_dpt.png")
+```
+
+#### Récupération des données sur l'année 2022 (avec `collect_all = TRUE`)
+
+```{r, eval=FALSE}
+oison_27_df <- 
+  get_taxon_dpt(
+  dpt_code = "27",
+  login = "john.doe@ofb.gouv.fr",
+  mdp = "mon_mdp",
+  date_min = '2022-01-01',
+  date_max = '2022-12-31',
+  collect_all = T)
+```
+
+Le résultat de la requête est de nouveau un objet de type `data.frame`. Les noms de colonnes peuvent être obtenus de la façon suivante :
+
+```{r, eval=FALSE}
+oison_27_df %>% 
+  names()
+```
+
+```{r varnames_taxons_api, echo=FALSE, out.width="200%"}
+knitr::include_graphics("../man/figures/oison_api_taxons_variables.png")
+```
+
+### Exemple avec la fonction `get_taxon_polygon()`
+
+Cette fonction permet de consulter/récupérer (selon l'argument `collect_all = FALSE` ou `collect_all = TRUE`) les données sur une zone géographique définie par un polygone. Spécifier une plage de date est également possible. Le polygone peut être :
+
+  - écrit manuellement ;
+
+```{r, echo=FALSE}
+"POLYGON ((410677.9 6877209, 413275.2 6929083, 496961.8 6925506, 495122.6 6873600, 410677.9 6877209))"
+```
+
+  - tracé à la volée lorsque l'argument `draw_zone = TRUE` est spécifié dans la fonction. Dès lors, un outil de sélection de zone s'ouvre (via une fenêtre interactive `shiny`) permettant le traçage du polygone et son. La forme stockage dans l'environnement de travail pour la requête.
+  
+```{r, eval=FALSE}
+get_taxon_polygon(
+  login = "john.doe@ofb.gouv.fr",
+  mdp = "mon_mdp",
+  draw_zone = T,
+  collect_all = F)
+```
+
+```{r outil_tracage, echo=FALSE, out.width="100%"}
+knitr::include_graphics("../man/figures/oison_outil_polygon.png")
+```
+
+```{r api_polygon, echo=FALSE, out.width="100%"}
+knitr::include_graphics("../man/figures/oison_api_polygon.png")
+```

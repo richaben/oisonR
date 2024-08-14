@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ### Pourquoi un package `oisonR` ?
 
-Ce package a été développé pour faciliter l’accès aux données bancarisées dans [OISON](https://oison.ofb.fr/), et ainsi permettre leur ré-utilisation dans le cadre de projets de valorisation (téléchargement des données et leur mise en forme dans des formats exploitables).
+Ce package a été développé pour faciliter l’accès aux données bancarisées dans [OISON](https://oison.ofb.fr/), et ainsi permettre leur ré-utilisation dans le cadre de projets de valorisation (téléchargement des données et mises en formes dans des formats exploitables).
 
 #### Installation et chargement
 
@@ -36,9 +36,9 @@ Avec ce package, l'accès aux données [OISON](https://oison.ofb.fr/) peut se fa
 
 -   par la base de données SQL. Cela nécessite d'obtenir les paramètres de connexion à la base au préalable, et une connexion au réseau interne de l'OFB (ou au VPN). Par ce moyen, les données accessibles sont datées à J-1 sur une copie de la base (*en lecture seule*). Ici, un volume important de données peut être téléchargé (*plus rapidement que par l'API*).
 
-> 💡 *Certaines fonctions du package exigent donc des paramètres particuliers pour l'accès aux données (par exemple login, mot de passe, etc...). Pour ne pas saisir ces paramètres à chaque utilisation, il est conseillé de stocker ces éléments directement dans l’environnement `R`* (*cf. procédure ci-dessous*).
+> 💡 *Certaines fonctions exigent des paramètres particuliers pour l'accès aux données (par exemple login, mot de passe, etc...). Pour ne pas saisir ces paramètres à chaque utilisation, il est conseillé de les stocker directement dans l’environnement `R`* (*cf. procédure ci-dessous*).
 
-Deux fonctions utiles sont disponibles pour vérifier si les informations de connexion sont bien stockées dans l'environnement `R` :
+Deux fonctions utiles sont disponibles pour vérifier si les informations de connexion sont bien sauvegardées et stockées dans l'environnement `R` de l'utilisateur:
 
 ```{r, echo = TRUE, eval = FALSE}
 ## pour vérifier les éléments de connexion via l'api
@@ -50,7 +50,7 @@ check_acces_oison_sql()
 
 #### Marche à suivre pour stocker des informations dans l'environnement `R`
 
-⚠ *Il faut bien renseigner les informations dans l'environnement* `R` *avec le même nom que ci-dessous pour que ces éléments soient vérifiables et utilisables par les fonctions* `check_acces_oison_***()` .
+⚠ *Il faut bien renseigner les informations dans l'environnement* `R` *avec le même nom que ci-dessous pour que ces éléments soient vérifiables et utilisables par les fonctions* `check_acces_oison_***()`.
 
 1.  Connexion via l'API
 
