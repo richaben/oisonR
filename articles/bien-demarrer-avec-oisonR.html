@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">oisonR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Activer la navigation">
@@ -76,7 +76,7 @@
 <p>Ce package a été développé pour faciliter l’accès aux données
 bancarisées dans <a href="https://oison.ofb.fr/" class="external-link">OISON</a>, et ainsi
 permettre leur ré-utilisation dans le cadre de projets de valorisation
-(téléchargement des données et leur mise en forme dans des formats
+(téléchargement des données et mises en formes dans des formats
 exploitables).</p>
 <div class="section level4">
 <h4 id="installation-et-chargement">Installation et chargement<a class="anchor" aria-label="anchor" href="#installation-et-chargement"></a>
@@ -107,15 +107,15 @@ seule</em>). Ici, un volume important de données peut être téléchargé
 (<em>plus rapidement que par l’API</em>).</p></li>
 </ul>
 <blockquote>
-<p>💡 <em>Certaines fonctions du package exigent donc des paramètres
-particuliers pour l’accès aux données (par exemple login, mot de passe,
-etc…). Pour ne pas saisir ces paramètres à chaque utilisation, il est
-conseillé de stocker ces éléments directement dans l’environnement
-<code>R</code></em> (<em>cf. procédure ci-dessous</em>).</p>
+<p>💡 <em>Certaines fonctions exigent des paramètres particuliers pour
+l’accès aux données (par exemple login, mot de passe, etc…). Pour ne pas
+saisir ces paramètres à chaque utilisation, il est conseillé de les
+stocker directement dans l’environnement <code>R</code></em>
+(<em>cf. procédure ci-dessous</em>).</p>
 </blockquote>
 <p>Deux fonctions utiles sont disponibles pour vérifier si les
-informations de connexion sont bien stockées dans l’environnement
-<code>R</code> :</p>
+informations de connexion sont bien sauvegardées et stockées dans
+l’environnement <code>R</code> de l’utilisateur:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## pour vérifier les éléments de connexion via l'api</span></span>
 <span><span class="fu"><a href="../reference/check_acces_oison_api.html">check_acces_oison_api</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -130,7 +130,7 @@ informations de connexion sont bien stockées dans l’environnement
 <p>⚠ <em>Il faut bien renseigner les informations dans
 l’environnement</em> <code>R</code> <em>avec le même nom que ci-dessous
 pour que ces éléments soient vérifiables et utilisables par les
-fonctions</em> <code>check_acces_oison_***()</code> .</p>
+fonctions</em> <code>check_acces_oison_***()</code>.</p>
 <ol style="list-style-type: decimal">
 <li>Connexion via l’API</li>
 </ol>

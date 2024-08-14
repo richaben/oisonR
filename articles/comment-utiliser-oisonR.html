@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">oisonR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Activer la navigation">
@@ -113,7 +113,7 @@ connexion à la base avec la fonction
 </h5>
 <p>Le package <code>COGiter</code> peut être utilisé pour récupérer la
 géométrie correspondant à la région, et la convertir en chaîne de
-caractères pour effectuer la requête.</p>
+caractères utilisables pour la requête spatiale.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">geom_BZH</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">COGiter</span><span class="fu">::</span><span class="va"><a href="https://maeltheuliere.github.io/COGiter/reference/regions_geo_xx.html" class="external-link">regions_geo</a></span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -157,11 +157,11 @@ priviligée !</p>
 <div class="section level5">
 <h5 id="filtrage-des-données">3. Filtrage des données<a class="anchor" aria-label="anchor" href="#filtrage-des-donn%C3%A9es"></a>
 </h5>
-<p>Pour extraire les observations taxons correspondant aux écrevisses
-observées en 2023, il suffit de réaliser un filtrage à partir (i) de la
-colonne <code>nom_vernaculaire</code> et (ii) de la nouvelle colonne
-<code>annee</code> (créée à partir de la colonne <code>date</code>)
-:</p>
+<p>Pour extraire les <em>observations taxons</em> correspondant aux
+écrevisses datées de 2023, il suffit de réaliser un filtrage à partir
+(i) de la colonne <code>nom_vernaculaire</code> et (ii) de la nouvelle
+colonne <code>annee</code> (créée à partir de la colonne
+<code>date</code>) :</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oison_BZH_ecrevisse_2023</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">oison_BZH</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -183,9 +183,9 @@ package <code>sf</code>.</p>
 <code class="sourceCode R"><span><span class="va">oison_BZH_ecrevisse_2023_sf</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">oison_BZH_ecrevisse_2023</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Avec cet objet, les visualisations interactives sont possibles (<em>à
-noter qu’il ne s’agit pas des vraies données dans l’exemple
-ci-dessous…</em> 🕶) avec le package <code>mapview</code> :</p>
+<p>Avec cet objet, les visualisations interactives sont possibles avec
+le package <code>mapview</code> (<em>à noter qu’il ne s’agit pas des
+vraies données dans l’exemple ci-dessous…</em> 🕶) :</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oison_BZH_ecrevisse_2023_sf</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">mapview</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html" class="external-link">mapview</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -195,11 +195,11 @@ ci-dessous…</em> 🕶) avec le package <code>mapview</code> :</p>
 <h5 id="export-des-données">5. Export des données<a class="anchor" aria-label="anchor" href="#export-des-donn%C3%A9es"></a>
 </h5>
 <p>L’export sous différents formats est possible, dont le format
-<em>geopackage</em> <code>.gpkg</code> pour une réutilisation sous
+<em>geopackage</em> (<code>.gpkg</code>) pour une réutilisation sous
 SIG.</p>
 <blockquote>
-<p>💡 Le format <code>gpkg</code> permet de conserver dans le même objet
-les différents types de géométries pouvant se retrouver dans OISON
+<p>💡 Le format <code>gpkg</code> permet de conserver les différents
+types de géométries pouvant se retrouver dans les observations OISON
 (points, polygones, lignes, …).</p>
 </blockquote>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -222,6 +222,9 @@ observations de la base, sauf si une géométrie est précisée en argument
 <div class="section level4">
 <h4 id="exemple-pour-les-observations-milieu-pour-la-région-bretagne">Exemple pour les observations milieu pour la région Bretagne<a class="anchor" aria-label="anchor" href="#exemple-pour-les-observations-milieu-pour-la-r%C3%A9gion-bretagne"></a>
 </h4>
+<p>L’exemple ci-dessous correspond à une extraction des <em>observations
+milieu</em> sur la zone géographique de la région Bretagne, en utilisant
+l’objet précédemment créé (<code>geom_BZH</code> ; cf. ci-dessus) :</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># a) connexion</span></span>
 <span><span class="va">bdd_oison</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/start_sql_connexion.html">start_sql_connexion</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -233,7 +236,7 @@ observations de la base, sauf si une géométrie est précisée en argument
 <span></span>
 <span><span class="co"># d) stop de la connexion</span></span>
 <span><span class="fu"><a href="../reference/stop_sql_connexion.html">stop_sql_connexion</a></span><span class="op">(</span>conn <span class="op">=</span> <span class="va">bdd_oison</span><span class="op">)</span></span></code></pre></div>
-<p>Le résultat de la requête est un objet de type
+<p>Le résultat de la requête est de nouveau un objet de type
 <code>data.frame</code>. Les noms de colonnes peuvent être obtenus de la
 façon suivante :</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -246,7 +249,96 @@ façon suivante :</p>
 <div class="section level2">
 <h2 id="récupérer-les-données-via-lapi">Récupérer les données via l’API<a class="anchor" aria-label="anchor" href="#r%C3%A9cup%C3%A9rer-les-donn%C3%A9es-via-lapi"></a>
 </h2>
-<p>TO COMPLETE… 🛠</p>
+<p>Trois fonctions permettent de récupérer les données via une “API”.
+Pour le moment, il n’est possible que de récupérer les <em>observations
+taxons</em>. Les fonctions sont les suivantes :</p>
+<ul>
+<li>
+<code><a href="../reference/get_taxon_dpt.html">get_taxon_dpt()</a></code> pour récupérer les <em>observations
+taxons</em> sur un département en spécifiant son code insee ;</li>
+<li>
+<code><a href="../reference/get_taxon_region.html">get_taxon_region()</a></code> pour récupérer les <em>observations
+taxons</em> sur une région en spécifiant son code insee ;</li>
+<li>
+<code><a href="../reference/get_taxon_polygon.html">get_taxon_polygon()</a></code> pour récupérer les <em>observations
+taxons</em> sur une zone géographique définie au préalable ou tracée à
+la volée avec une fonction dédiée.</li>
+</ul>
+<p>Avec ces 3 fonctions, il est possible de collecter les données (avec
+l’argument <code>collect_all = TRUE</code>) ou simplement consulter
+rapidement le nombre de données sur l’étendue géographique (lorsque
+l’argument <code>collect_all = FALSE</code>).</p>
+<p>Une période de temps peut être également spécifiée avec les arguments
+<code>date_min</code> et <code>date_max</code>.</p>
+<p>La récupération des données est séquencée pour limiter la surcharge
+de l’API.</p>
+<div class="section level4">
+<h4 id="exemples-pour-le-département-27-avec-get_taxon_dpt">Exemples pour le département 27 avec
+<code>get_taxon_dpt()</code><a class="anchor" aria-label="anchor" href="#exemples-pour-le-d%C3%A9partement-27-avec-get_taxon_dpt"></a>
+</h4>
+<div class="section level5">
+<h5 id="consultation-simple-sur-lannée-2022-avec-collect_all-false">Consultation simple sur l’année 2022 (avec
+<code>collect_all = FALSE</code>)<a class="anchor" aria-label="anchor" href="#consultation-simple-sur-lann%C3%A9e-2022-avec-collect_all-false"></a>
+</h5>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_taxon_dpt.html">get_taxon_dpt</a></span><span class="op">(</span></span>
+<span>  dpt_code <span class="op">=</span> <span class="st">"27"</span>,</span>
+<span>  login <span class="op">=</span> <span class="st">"john.doe@ofb.gouv.fr"</span>,</span>
+<span>  mdp <span class="op">=</span> <span class="st">"mon_mdp"</span>,</span>
+<span>  date_min <span class="op">=</span> <span class="st">'2022-01-01'</span>,</span>
+<span>  date_max <span class="op">=</span> <span class="st">'2022-12-31'</span>,</span>
+<span>  collect_all <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<p><img src="../reference/figures/oison_api_dpt.png" width="80%"></p>
+</div>
+<div class="section level5">
+<h5 id="récupération-des-données-sur-lannée-2022-avec-collect_all-true">Récupération des données sur l’année 2022 (avec
+<code>collect_all = TRUE</code>)<a class="anchor" aria-label="anchor" href="#r%C3%A9cup%C3%A9ration-des-donn%C3%A9es-sur-lann%C3%A9e-2022-avec-collect_all-true"></a>
+</h5>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">oison_27_df</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/get_taxon_dpt.html">get_taxon_dpt</a></span><span class="op">(</span></span>
+<span>  dpt_code <span class="op">=</span> <span class="st">"27"</span>,</span>
+<span>  login <span class="op">=</span> <span class="st">"john.doe@ofb.gouv.fr"</span>,</span>
+<span>  mdp <span class="op">=</span> <span class="st">"mon_mdp"</span>,</span>
+<span>  date_min <span class="op">=</span> <span class="st">'2022-01-01'</span>,</span>
+<span>  date_max <span class="op">=</span> <span class="st">'2022-12-31'</span>,</span>
+<span>  collect_all <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<p>Le résultat de la requête est de nouveau un objet de type
+<code>data.frame</code>. Les noms de colonnes peuvent être obtenus de la
+façon suivante :</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">oison_27_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="../reference/figures/oison_api_taxons_variables.png" width="200%"></p>
+</div>
+</div>
+<div class="section level4">
+<h4 id="exemple-avec-la-fonction-get_taxon_polygon">Exemple avec la fonction <code>get_taxon_polygon()</code><a class="anchor" aria-label="anchor" href="#exemple-avec-la-fonction-get_taxon_polygon"></a>
+</h4>
+<p>Cette fonction permet de consulter/récupérer (selon l’argument
+<code>collect_all = FALSE</code> ou <code>collect_all = TRUE</code>) les
+données sur une zone géographique définie par un polygone. Spécifier une
+plage de date est également possible. Le polygone peut être :</p>
+<ul>
+<li>écrit manuellement ;</li>
+</ul>
+<pre><code><span><span class="co">#&gt; [1] "POLYGON ((410677.9 6877209, 413275.2 6929083, 496961.8 6925506, 495122.6 6873600, 410677.9 6877209))"</span></span></code></pre>
+<ul>
+<li>tracé à la volée lorsque l’argument <code>draw_zone = TRUE</code>
+est spécifié dans la fonction. Dès lors, un outil de sélection de zone
+s’ouvre (via une fenêtre interactive <code>shiny</code>) permettant le
+traçage du polygone et son. La forme stockage dans l’environnement de
+travail pour la requête.</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_taxon_polygon.html">get_taxon_polygon</a></span><span class="op">(</span></span>
+<span>  login <span class="op">=</span> <span class="st">"john.doe@ofb.gouv.fr"</span>,</span>
+<span>  mdp <span class="op">=</span> <span class="st">"mon_mdp"</span>,</span>
+<span>  draw_zone <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  collect_all <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<p><img src="../reference/figures/oison_outil_polygon.png" width="100%"></p>
+<p><img src="../reference/figures/oison_api_polygon.png" width="100%"></p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table des matières"><h2>Sur cette page</h2>
     </nav></aside>
