@@ -16,9 +16,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Récupérer les données via l'accès à la base SQL
+# Récupérer les données via l'accès à la base SQL
 
-### Chargement des packages
+## Chargement des packages
 
 Quelques packages sont nécessaires pour exécuter les exemples ci-dessous.
 
@@ -30,12 +30,12 @@ library(dplyr)
 library(COGiter)
 ```
 
-### Les observations taxons
+## Les observations taxons
 
-Les *observations taxons* de [OISON](https://oison.ofb.fr/) sont récupérables avec la fonction `get_table_taxon_sql()`. Avant son utilisation, il faut toutefois : 
+Les *observations taxons* de [OISON](https://oison.ofb.fr/) sont récupérables avec la fonction `get_table_taxon_sql()`. Avant son utilisation, il faut toutefois :
 
-  - s'assurer de disposer des paramètres de connexion à la base SQL (*cf*. la vignette `oisonR` pour plus de détails) ;
-  - puis, initier la connexion à la base de données avec la fonction `start_sql_connexion()`.
+-   s'assurer de disposer des paramètres de connexion à la base SQL (*cf*. la vignette `oisonR` pour plus de détails) ;
+-   puis, initier la connexion à la base de données avec la fonction `start_sql_connexion()`.
 
 La fonction permet de récupérer l'ensemble des observations de la base, sauf si une géométrie est précisée en argument (argument `geometrie` dans la fonction).
 
@@ -61,8 +61,7 @@ geom_BZH <-
 string_geom_exemple <- paste0(substr(geom_BZH,1,100), '....')
 ```
 
-Le début de la géométrie prend la forme suivante : 
-`r string_geom_exemple`. 
+Le début de la géométrie prend la forme suivante : `r string_geom_exemple`.
 
 #### 2. Récupération des données *observations taxons*
 
@@ -90,9 +89,9 @@ oison_BZH %>%
 knitr::include_graphics("../man/figures/oison_table_taxons_variables.png")
 ```
 
-> ⚠️ A noter qu'ici les champs de données peuvent être différents de ceux présents dans les exports de l'application OISON* (*i.e* *champs manquants). Une vue simplifiée et facilement utilisable a été priviligée ! 
+> ⚠️ A noter qu'ici les champs de données peuvent être différents de ceux présents dans les exports de l'application OISON\* (*i.e* \*champs manquants). Une vue simplifiée et facilement utilisable a été priviligée !
 
-####  3. Filtrage des données
+#### 3. Filtrage des données
 
 Pour extraire les observations taxons correspondant aux écrevisses observées en 2023, il suffit de réaliser un filtrage à partir (i) de la colonne `nom_vernaculaire` et (ii) de la nouvelle colonne `annee` (créée à partir de la colonne `date`) :
 
@@ -108,7 +107,7 @@ oison_BZH_ecrevisse_2023 <-
 ```
 
 #### 4. Visualisation des données
-  
+
 Pour une réutilisation en analyse spatiale, la colonne `geometry` doit être convertie au format `sf` (*simple features*) avec la fonction `st_as_sf()` du package `sf`.
 
 ```{r, eval=FALSE}
@@ -158,11 +157,39 @@ sf::write_sf(oison_BZH_ecrevisse_2023_sf,
              driver = "GPKG")
 ```
 
-### Les observations milieu
+## Les observations milieu
 
-TO COMPLETE... 🛠
+Les *observations milieu* de [OISON](https://oison.ofb.fr/) sont récupérables avec la fonction `get_table_milieu_sql()`. Comme précédemment, il faut disposer des paramètres de connexion à la base SQL (*cf*. la vignette `oisonR` pour plus de détails).
+
+Par défaut, la fonction permet de récupérer l'ensemble des observations de la base, sauf si une géométrie est précisée en argument (argument `geometrie` dans la fonction).
+
+### Exemple pour les observations milieu pour la région Bretagne
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# a) connexion
+bdd_oison <- start_sql_connexion()
+
+# b) requete
+oison_milieu_BZH <- 
+  get_table_milieu_sql(conn = bdd_oison,
+                      geometrie = geom_BZH)
+
+# d) stop de la connexion
+stop_sql_connexion(conn = bdd_oison)
+```
+
+Le résultat de la requête est un objet de type `data.frame`. Les noms de colonnes peuvent être obtenus de la façon suivante :
+
+```{r, eval=FALSE}
+oison_milieu_BZH %>% 
+  names()
+```
+
+```{r varnames_milieu, echo=FALSE, out.width="200%"}
+knitr::include_graphics("../man/figures/oison_table_milieu_variables.png")
+```
 
 
-## Récupérer les données via l'API
+# Récupérer les données via l'API
 
 TO COMPLETE... 🛠
