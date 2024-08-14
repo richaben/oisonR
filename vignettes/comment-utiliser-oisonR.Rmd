@@ -185,6 +185,7 @@ oison_milieu_BZH %>%
   names()
 ```
 
+
 ```{r varnames_milieu, echo=FALSE, out.width="200%"}
 knitr::include_graphics("../man/figures/oison_table_milieu_variables.png")
 ```
