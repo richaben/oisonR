@@ -4,7 +4,7 @@
 #' A partir d'un dataframe issu de la requête OISON, cette fonction permet de récupérer
 #' les informations relatives aux Habitats présentés sur la fiche taxon de l'INPN.
 #' Par exemple, pour le Rougegorge familier, les infos sont collectés
-#' \url{https://inpn.mnhn.fr/espece/cd_nom/4001/tab/habitats}{sur sa fiche ici}.
+#' \href{https://inpn.mnhn.fr/espece/cd_nom/4001/tab/habitats}{sur sa fiche ici}.
 #'
 #' @param df un dataframe issu d'une requête taxon OISON avec à minima les 3 colonnes suivantes :
 #'  - le nom vernaculaire
@@ -37,14 +37,14 @@
 #'
 #' ## Collecte des informations Codes Habitats
 #' code_habitats <-
-#'   imp_inpn_habitats_taxon(df = data_oison,
+#'   add_inpn_habitats_taxon(df = data_oison,
 #'                           cdnom_col = cd_ref,
 #'                           nom_sci_col = nom_scientifique,
 #'                           nom_vern_col = nom_vernaculaire)
 #'
 #' }
 
-imp_inpn_habitats_taxon <- function(df,
+add_inpn_habitats_taxon <- function(df,
                                     cdnom_col,
                                     nom_vern_col,
                                     nom_sci_col){

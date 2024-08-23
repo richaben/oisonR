@@ -24,12 +24,12 @@
 #' readRDS(file = './regions_geo_normandie.rds') %>%
 #' sf::st_transform(crs = 4326)
 #'
-#' maille_inpn <- imp_inpn_maille_taxon(df = data_oison,  shape = normandie_shp)
+#' maille_inpn <- add_inpn_maille_taxon(df = data_oison,  shape = normandie_shp)
 #'
 #' }
 #'
 
-imp_inpn_maille_taxon <- function(df, shape){
+add_inpn_maille_taxon <- function(df, shape){
 
   base_url_geometrie <- "https://odata-inpn.mnhn.fr/geometries/grids/taxon/{cd_ref}"
 
