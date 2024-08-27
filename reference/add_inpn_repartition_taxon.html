@@ -82,6 +82,19 @@ Exemple de carte de répartition pour la Salamandre tachetée :
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co">## Exemple pour la Salamandre tachetée sur le département du Calvados (14)</span></span></span>
 <span class="r-in"><span><span class="fu">oisonR</span><span class="fu">::</span><span class="fu">add_inpn_repartition_taxon</span><span class="op">(</span>cd_nom <span class="op">=</span> <span class="fl">965096</span>, code_dpt <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Pour une liste de taxons et de départements</span></span></span>
+<span class="r-in"><span><span class="co">### 3 taxons</span></span></span>
+<span class="r-in"><span><span class="va">taxons</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">965096</span>, <span class="co"># Salamandre tachetée</span></span></span>
+<span class="r-in"><span>           <span class="fl">310</span>, <span class="co"># Grenouille agile</span></span></span>
+<span class="r-in"><span>           <span class="fl">77949</span> <span class="co"># Couleuvre verte et jaune</span></span></span>
+<span class="r-in"><span>           <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># 5 départements</span></span></span>
+<span class="r-in"><span><span class="va">departements</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">14</span>, <span class="fl">27</span>, <span class="fl">50</span>, <span class="fl">61</span>, <span class="fl">76</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand_grid.html" class="external-link">expand_grid</a></span><span class="op">(</span><span class="va">taxons</span>, <span class="va">departements</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">pmap_dfr</a></span><span class="op">(</span><span class="va">.</span>, <span class="op">~</span><span class="fu">add_inpn_repartition_taxon</span><span class="op">(</span>cd_nom <span class="op">=</span> <span class="va">.x</span>, code_dpt <span class="op">=</span> <span class="va">.y</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
