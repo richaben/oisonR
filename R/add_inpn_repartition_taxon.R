@@ -23,28 +23,48 @@
 #' \dontrun{
 #' ## Exemple pour la Salamandre tachetée sur le département du Calvados (14)
 #' oisonR::add_inpn_repartition_taxon(cd_nom = 965096, code_dpt = 14)
+#'
+#' ## Pour une liste de taxons et de départements
+#' ### 3 taxons
+#' taxons <- c(965096, # Salamandre tachetée
+#'            310, # Grenouille agile
+#'            77949 # Couleuvre verte et jaune
+#'            )
+#' # 5 départements
+#' departements <- c(14, 27, 50, 61, 76)
+#'
+#' tidyr::expand_grid(taxons, departements) %>%
+#'   purrr::pmap_dfr(., ~add_inpn_repartition_taxon(cd_nom = .x, code_dpt = .y))
+#'
 #' }
 
 add_inpn_repartition_taxon <- function(cd_nom, code_dpt){
 
   url_repartition <- glue::glue("https://inpn.mnhn.fr/espece/cd_nom/{cd_nom}/donnees/dept/{code_dpt}")
 
-  species_name <-
-    rvest::read_html(url_repartition) %>%
-    rvest::html_elements("h2") %>%
-    rvest::html_text() %>% .[[1]]
+  tryCatch(
+    {
 
-  dpt_name <-
-    rvest::read_html(url_repartition) %>%
-    rvest::html_elements("h2") %>%
-    rvest::html_text() %>% .[[2]]
+      species_name <-
+        rvest::read_html(url_repartition) %>%
+        rvest::html_elements("h2") %>%
+        rvest::html_text() %>% .[[1]]
 
-  rvest::read_html(url_repartition) %>%
-    rvest::html_element("table") %>%
-    rvest::html_table() %>%
-    dplyr::as_tibble() %>%
-    dplyr::mutate(cd_nom = {{cd_nom}},
-                  code_dpt = {{code_dpt}},
-                  nom_sci = species_name,
-                  .before = 1)
+      dpt_name <-
+        rvest::read_html(url_repartition) %>%
+        rvest::html_elements("h2") %>%
+        rvest::html_text() %>% .[[2]]
+
+      rvest::read_html(url_repartition) %>%
+        rvest::html_element("table") %>%
+        rvest::html_table() %>%
+        dplyr::as_tibble() %>%
+        dplyr::mutate(cd_nom = {{cd_nom}},
+                      code_dpt = {{code_dpt}},
+                      nom_sci = species_name,
+                      .before = 1)
+
+    },
+    error = function(e) {"Erreur connexion - v\u00e9rifiez disponibilit\u00e9 du site de l\'INPN"}
+  )
 }

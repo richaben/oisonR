@@ -27,5 +27,18 @@ Exemple de carte de répartition pour la Salamandre tachetée :
 \dontrun{
 ## Exemple pour la Salamandre tachetée sur le département du Calvados (14)
 oisonR::add_inpn_repartition_taxon(cd_nom = 965096, code_dpt = 14)
+
+## Pour une liste de taxons et de départements
+### 3 taxons
+taxons <- c(965096, # Salamandre tachetée
+           310, # Grenouille agile
+           77949 # Couleuvre verte et jaune
+           )
+# 5 départements
+departements <- c(14, 27, 50, 61, 76)
+
+tidyr::expand_grid(taxons, departements) \%>\%
+  purrr::pmap_dfr(., ~add_inpn_repartition_taxon(cd_nom = .x, code_dpt = .y))
+
 }
 }
