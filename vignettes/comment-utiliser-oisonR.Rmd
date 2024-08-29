@@ -85,7 +85,7 @@ oison_BZH %>%
   names()
 ```
 
-```{r varnames, echo=FALSE, out.width="200%"}
+```{r varnames, echo=FALSE, out.width="200%", fig.alt= 'exemple variables taxons'}
 knitr::include_graphics("../man/figures/oison_table_taxons_variables.png")
 ```
 
@@ -123,7 +123,7 @@ oison_BZH_ecrevisse_2023_sf %>%
   mapview::mapview()
 ```
 
-```{r exemple_mapview, echo=FALSE, out.width="200%"}
+```{r exemple_mapview, echo=FALSE, out.width="200%", fig.alt= 'exemple ecrevisses'}
 knitr::include_graphics("../man/figures/oison_exemple_ecrevisses_bzh.png")
 ```
 
@@ -188,7 +188,7 @@ oison_milieu_BZH %>%
 ```
 
 
-```{r varnames_milieu, echo=FALSE, out.width="200%"}
+```{r varnames_milieu, echo=FALSE, out.width="200%", fig.alt= 'exemple variables milieux'}
 knitr::include_graphics("../man/figures/oison_table_milieu_variables.png")
 ```
 
@@ -221,7 +221,7 @@ get_taxon_dpt(
   collect_all = F)
 ```
 
-```{r oison_api_dpt, echo=FALSE, out.width="80%"}
+```{r oison_api_dpt, echo=FALSE, out.width="80%", fig.alt= 'exemple taxon api dpt'}
 knitr::include_graphics("../man/figures/oison_api_dpt.png")
 ```
 
@@ -245,7 +245,7 @@ oison_27_df %>%
   names()
 ```
 
-```{r varnames_taxons_api, echo=FALSE, out.width="200%"}
+```{r varnames_taxons_api, echo=FALSE, out.width="200%", fig.alt= 'exemple variables taxons api'}
 knitr::include_graphics("../man/figures/oison_api_taxons_variables.png")
 ```
 
@@ -271,10 +271,10 @@ get_taxon_polygon(
   collect_all = F)
 ```
 
-```{r outil_tracage, echo=FALSE, out.width="100%"}
+```{r outil_tracage, echo=FALSE, out.width="100%", fig.alt= 'exemple outil polygone'}
 knitr::include_graphics("../man/figures/oison_outil_polygon.png")
 ```
 
-```{r api_polygon, echo=FALSE, out.width="100%"}
+```{r api_polygon, echo=FALSE, out.width="100%", fig.alt= 'exemple resultats polygone'}
 knitr::include_graphics("../man/figures/oison_api_polygon.png")
 ```
