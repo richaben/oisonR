@@ -19,4 +19,8 @@ Useful links:
 }
 
 }
+\author{
+\strong{Maintainer}: Benoit Richard \email{benoit.richard@ofb.gouv.fr} (\href{https://orcid.org/0000-0003-4522-027X}{ORCID})
+
+}
 \keyword{internal}
