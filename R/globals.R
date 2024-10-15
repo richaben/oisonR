@@ -136,7 +136,9 @@ globalVariables(unique(
     "impact_situation",
     "milieu_impact",
     "perturbation",
-    "url_esp_hab"
+    "url_esp_hab",
+    # add_type_geometrie:
+    "type_geometrie"
   )
 ))
 
