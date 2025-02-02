@@ -1,8 +1,13 @@
 url: https://richaben.github.io/oisonR/
 template:
   bootstrap: 5
+  light-switch: true
   bslib:
     bg: "#fffefd" # fffefd
     fg: "#000000" # 04293A
     primary: "#0083CB" # 064663
+  includes:
+    after_body: >
+    <script data-goatcounter="https://richaben.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 lang: fr
