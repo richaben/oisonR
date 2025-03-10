@@ -138,7 +138,11 @@ globalVariables(unique(
     "perturbation",
     "url_esp_hab",
     # add_type_geometrie:
-    "type_geometrie"
+    "type_geometrie",
+    # add_oison_img_files:
+    "file_url",
+    "sound_observation_id"
+
   )
 ))
 
