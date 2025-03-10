@@ -207,15 +207,6 @@ get_table_milieu_sql <-
           dplyr::select(chronicite_id = id,
                         chronicite = label)
       ) %>%
-      # join to image
-      dplyr::left_join(
-        dplyr::tbl(
-          conn,
-          dbplyr::in_schema("data", "file")
-        )
-      ) %>%
-      dplyr::rename(fichier_img_id = file_url,
-                    fichier_son_id = sound_observation_id) %>%
       # selection columns
       dplyr::select(
         observation_id,
@@ -260,9 +251,7 @@ get_table_milieu_sql <-
         surface_station,
         longueur_troncon,
         localisation_id,
-        uuid,
-        fichier_img_id,
-        fichier_son_id
+        uuid
       ) %>%
       # test some rows
       dplyr::collect() %>%
