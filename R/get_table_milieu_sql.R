@@ -83,12 +83,12 @@ get_table_milieu_sql <-
             )
         }
     } %>%
-    # join to data observations milieu
+      # join to data observations milieu
       dplyr::inner_join(
-    dplyr::tbl(conn, dbplyr::in_schema("data", "observation")) %>%
-      dplyr::filter(type == 'milieu') %>%
-      dplyr::rename(observation_id = id,
-                    heure = time)) %>%
+        dplyr::tbl(conn, dbplyr::in_schema("data", "observation")) %>%
+          dplyr::filter(type == 'milieu') %>%
+          dplyr::rename(observation_id = id,
+                        heure = time)) %>%
 
       #dplyr::filter(type == 'milieu') %>%
 
@@ -207,6 +207,15 @@ get_table_milieu_sql <-
           dplyr::select(chronicite_id = id,
                         chronicite = label)
       ) %>%
+      # join to image
+      dplyr::left_join(
+        dplyr::tbl(
+          conn,
+          dbplyr::in_schema("data", "file")
+        )
+      ) %>%
+      dplyr::rename(fichier_img_id = file_url,
+                    fichier_son_id = sound_observation_id) %>%
       # selection columns
       dplyr::select(
         observation_id,
@@ -251,14 +260,17 @@ get_table_milieu_sql <-
         surface_station,
         longueur_troncon,
         localisation_id,
-        uuid
+        uuid,
+        fichier_img_id,
+        fichier_son_id
       ) %>%
       # test some rows
       dplyr::collect() %>%
 
       # transform geometry to WKT
       dplyr::mutate(geometry =
-                      sf::st_as_sfc(structure(as.list(geometry), class = "WKB"), EWKB = TRUE))
+                      sf::st_as_sfc(structure(as.list(geometry), class = "WKB"), EWKB = TRUE)
+      )
   }
 
 
