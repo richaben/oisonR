@@ -18,14 +18,20 @@
 #'
 start_sql_connexion <- function() {
   conn <-
-    DBI::dbConnect(
-      drv = RPostgres::Postgres(),
-      host = Sys.getenv('OISON_BDhostname'),
-      port = Sys.getenv('OISON_BDport'),
-      dbname = Sys.getenv('OISON_BDname'),
-      user = Sys.getenv('OISON_BDuid'),
-      password = Sys.getenv('OISON_BDpwd')
-    )
+    tryCatch({
+      DBI::dbConnect(
+        drv = RPostgres::Postgres(),
+        host = Sys.getenv('OISON_BDhostname'),
+        port = Sys.getenv('OISON_BDport'),
+        dbname = Sys.getenv('OISON_BDname'),
+        user = Sys.getenv('OISON_BDuid'),
+        password = Sys.getenv('OISON_BDpwd')
+      )
+    }, error = function(e) {
+      message("Connexion \u00e0 la bdd OISON impossible ! V\u00e9rifiez les param\u00e8tres...\n", e$message)
+      return(NA)
+    })
+
   return(conn)
 }
 
