@@ -28,7 +28,7 @@
 #' ## Exemple 1. Export sans géométrie
 #' bdd_oison <- start_sql_connexion()
 #'
-#' df_taxon_oison_sql <- get_table_taxon_sql(conn = bd_oison)
+#' df_taxon_oison_sql <- get_table_taxon_sql(conn = bdd_oison)
 #'
 #' stop_sql_connexion(conn = bdd_oison)
 #'

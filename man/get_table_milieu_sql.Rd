@@ -34,7 +34,7 @@ observations sur les milieux sur la zone géographique spécifiée par la géom�
 ## Exemple 1. Export sans géométrie
 bdd_oison <- start_sql_connexion()
 
-df_milieu_oison_sql <- get_table_milieu_sql(conn = bd_oison)
+df_milieu_oison_sql <- get_table_milieu_sql(conn = bdd_oison)
 
 stop_sql_connexion(conn = bdd_oison)
 
