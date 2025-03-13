@@ -9,7 +9,7 @@
 #' @param ... arguments supplémentaires
 #'
 #' @importFrom dbplyr in_schema
-#' @importFrom dplyr left_join tbl collect rename
+#' @importFrom dplyr left_join tbl collect
 #'
 #' @returns un dataframe avec les fichiers images et sons associés à chaque observation
 #' @export
@@ -20,10 +20,10 @@
 #'
 #' df_taxon_oison_sql <- get_table_taxon_sql(conn = bd_oison)
 #'
-#' add_oison_img_files(df_taxon_oison_sql, bdd_oison)
+#' add_oison_files(df_taxon_oison_sql, bdd_oison)
 #' }
 
-add_oison_img_files <- function(oison_table, conn, ...) {
+add_oison_files <- function(oison_table, conn, ...) {
 
   if (missing(conn)) {
     stop("Connexion \u00e0 la base requise !")
@@ -36,11 +36,20 @@ add_oison_img_files <- function(oison_table, conn, ...) {
   oison_table %>%
     dplyr::left_join(
       dplyr::tbl(
-        conn,
+        bdd_oison,
         dbplyr::in_schema("data", "file")
       ) %>%
-        dplyr::collect()
-    ) %>%
-    dplyr::rename(fichier_img_id = file_url,
-                  fichier_son_id = sound_observation_id)
+        dplyr::filter(!is.na(observation_id)) %>%
+        dplyr::select(observation_id, fichier_id = file_url) %>%
+        dplyr::collect() %>%
+        dplyr::bind_rows(
+          dplyr::tbl(
+            bdd_oison,
+            dbplyr::in_schema("data", "file")
+          ) %>%
+            dplyr::filter(is.na(observation_id)) %>%
+            dplyr::select(observation_id = sound_observation_id, fichier_id = file_url) %>%
+            dplyr::collect()
+        )
+    )
 }

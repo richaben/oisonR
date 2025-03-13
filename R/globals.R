@@ -141,7 +141,8 @@ globalVariables(unique(
     "type_geometrie",
     # add_oison_img_files:
     "file_url",
-    "sound_observation_id"
+    "sound_observation_id",
+    "bdd_oison"
 
   )
 ))
