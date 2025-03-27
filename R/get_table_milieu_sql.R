@@ -60,7 +60,7 @@ get_table_milieu_sql <-
 
       req <- glue::glue('SRID=2154;{geometrie}')
 
-      dplyr::tbl(conn, dbplyr::in_schema("data", "localisation")) %>%
+      dplyr::tbl(conn, dbplyr::in_schema("oison_data", "localisation")) %>%
         dplyr::select(
           localisation_id = id,
           observation_id,
@@ -71,7 +71,7 @@ get_table_milieu_sql <-
           longueur_troncon
         ) %>%
         dplyr::filter(ST_Intersects(geometry, req)) } else {
-          dplyr::tbl(conn, dbplyr::in_schema("data", "localisation")) %>%
+          dplyr::tbl(conn, dbplyr::in_schema("oison_data", "localisation")) %>%
             dplyr::select(
               localisation_id = id,
               observation_id,
@@ -85,7 +85,7 @@ get_table_milieu_sql <-
     } %>%
       # join to data observations milieu
       dplyr::inner_join(
-        dplyr::tbl(conn, dbplyr::in_schema("data", "observation")) %>%
+        dplyr::tbl(conn, dbplyr::in_schema("oison_data", "observation")) %>%
           dplyr::filter(type == 'milieu') %>%
           dplyr::rename(observation_id = id,
                         heure = time)) %>%
@@ -104,7 +104,7 @@ get_table_milieu_sql <-
       ) %>%
       # join to type_recherche
       dplyr::left_join(
-        dplyr::tbl(conn, dbplyr::in_schema("referentiels", "type_recherche")) %>%
+        dplyr::tbl(conn, dbplyr::in_schema("oison_referentiels", "type_recherche")) %>%
           dplyr::select(type_recherche_id = id,
                         type_recherche = label)
       ) %>%
@@ -112,7 +112,7 @@ get_table_milieu_sql <-
       dplyr::left_join(
         dplyr::tbl(
           conn,
-          dbplyr::in_schema("referentiels", "contexte_recherche")
+          dbplyr::in_schema("oison_referentiels", "contexte_recherche")
         ) %>%
           dplyr::select(
             contexte_recherche_id = id,
@@ -124,7 +124,7 @@ get_table_milieu_sql <-
       dplyr::left_join(
         dplyr::tbl(
           conn,
-          dbplyr::in_schema("referentiels", "objectif_recherche")
+          dbplyr::in_schema("oison_referentiels", "objectif_recherche")
         ) %>%
           dplyr::select(
             objectif_recherche_id = id,
@@ -133,13 +133,13 @@ get_table_milieu_sql <-
       ) %>%
       # join to status
       dplyr::left_join(
-        dplyr::tbl(conn, dbplyr::in_schema("referentiels", "status")) %>%
+        dplyr::tbl(conn, dbplyr::in_schema("oison_referentiels", "status")) %>%
           dplyr::select(status_id = id,
                         status = label)
       ) %>%
       # join to corine biotope part
       dplyr::left_join(
-        dplyr::tbl(conn, dbplyr::in_schema("referentiels", "corine_biotope")) %>%
+        dplyr::tbl(conn, dbplyr::in_schema("oison_referentiels", "corine_biotope")) %>%
           dplyr::select(
             corine_biotope_id = id,
             corine_label = label,
@@ -150,7 +150,7 @@ get_table_milieu_sql <-
       dplyr::left_join(
         dplyr::tbl(
           conn,
-          dbplyr::in_schema("referentiels", "milieu_impact_suppose")
+          dbplyr::in_schema("oison_referentiels", "milieu_impact_suppose")
         ) %>%
           dplyr::select(impact_suppose_id = id,
                         impact_situation = label)
@@ -159,7 +159,7 @@ get_table_milieu_sql <-
       dplyr::left_join(
         dplyr::tbl(
           conn,
-          dbplyr::in_schema("referentiels", "milieu_perturbation")
+          dbplyr::in_schema("oison_referentiels", "milieu_perturbation")
         ) %>%
           dplyr::select(perturbation_id = id,
                         perturbation = label)
@@ -168,12 +168,12 @@ get_table_milieu_sql <-
       dplyr::left_join((
         dplyr::tbl(
           conn,
-          dbplyr::in_schema("data", "observation_milieu_code_impact")
+          dbplyr::in_schema("oison_data", "observation_milieu_code_impact")
         ) %>%
           dplyr::left_join(
             dplyr::tbl(
               conn,
-              dbplyr::in_schema("referentiels", "milieu_code_impact")
+              dbplyr::in_schema("oison_referentiels", "milieu_code_impact")
             ) %>%
               dplyr::select(
                 milieu_code_impact_id = id,
@@ -183,7 +183,7 @@ get_table_milieu_sql <-
       )) %>%
       # join to activite
       dplyr::left_join(
-        dplyr::tbl(conn, dbplyr::in_schema("referentiels", "milieu_activite")) %>%
+        dplyr::tbl(conn, dbplyr::in_schema("oison_referentiels", "milieu_activite")) %>%
           dplyr::select(activite_id = id,
                         activite = label)
       ) %>%
@@ -191,7 +191,7 @@ get_table_milieu_sql <-
       dplyr::left_join(
         dplyr::tbl(
           conn,
-          dbplyr::in_schema("referentiels", "milieu_fonction_observee")
+          dbplyr::in_schema("oison_referentiels", "milieu_fonction_observee")
         ) %>%
           dplyr::select(
             fonction_observee_id = id,
@@ -202,7 +202,7 @@ get_table_milieu_sql <-
       dplyr::left_join(
         dplyr::tbl(
           conn,
-          dbplyr::in_schema("referentiels", "milieu_chronicite")
+          dbplyr::in_schema("oison_referentiels", "milieu_chronicite")
         ) %>%
           dplyr::select(chronicite_id = id,
                         chronicite = label)

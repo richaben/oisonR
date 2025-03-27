@@ -60,7 +60,7 @@ get_table_taxon_sql <-
 
       req <- glue::glue('SRID=2154;{geometrie}')
 
-      dplyr::tbl(conn, dbplyr::in_schema("data", "localisation")) %>%
+      dplyr::tbl(conn, dbplyr::in_schema("oison_data", "localisation")) %>%
         dplyr::select(
           localisation_id = id,
           observation_id,
@@ -71,7 +71,7 @@ get_table_taxon_sql <-
           longueur_troncon
         ) %>%
         dplyr::filter(ST_Intersects(geometry, req)) } else {
-          dplyr::tbl(conn, dbplyr::in_schema("data", "localisation")) %>%
+          dplyr::tbl(conn, dbplyr::in_schema("oison_data", "localisation")) %>%
             dplyr::select(
               localisation_id = id,
               observation_id,
@@ -84,14 +84,14 @@ get_table_taxon_sql <-
         }
     } %>%
       dplyr::inner_join(
-        dplyr::tbl(conn, dbplyr::in_schema("data", "observation")) %>%
+        dplyr::tbl(conn, dbplyr::in_schema("oison_data", "observation")) %>%
           dplyr::filter(type != 'milieu') %>%
           dplyr::rename(observation_id = id,
                         heure = time)) %>%
       #
       # join to referentiel taxon by 'taxon_code'
       dplyr::left_join(
-        dplyr::tbl(conn, dbplyr::in_schema("referentiels", "taxon")) %>%
+        dplyr::tbl(conn, dbplyr::in_schema("oison_referentiels", "taxon")) %>%
           dplyr::rename(taxon_code = code) %>%
           dplyr::select(-leaf)
       ) %>%
@@ -107,7 +107,7 @@ get_table_taxon_sql <-
       ) %>%
       # join to corine biotope part
       dplyr::left_join(
-        dplyr::tbl(conn, dbplyr::in_schema("referentiels", "corine_biotope")) %>%
+        dplyr::tbl(conn, dbplyr::in_schema("oison_referentiels", "corine_biotope")) %>%
           dplyr::select(
             corine_biotope_id = id,
             corine_label = label,
@@ -116,7 +116,7 @@ get_table_taxon_sql <-
       ) %>%
       # join to type_recherche
       dplyr::left_join(
-        dplyr::tbl(conn, dbplyr::in_schema("referentiels", "type_recherche")) %>%
+        dplyr::tbl(conn, dbplyr::in_schema("oison_referentiels", "type_recherche")) %>%
           dplyr::select(type_recherche_id = id,
                         type_recherche = label)
       ) %>%
@@ -125,7 +125,7 @@ get_table_taxon_sql <-
       dplyr::left_join(
         dplyr::tbl(
           conn,
-          dbplyr::in_schema("referentiels", "contexte_recherche")
+          dbplyr::in_schema("oison_referentiels", "contexte_recherche")
         ) %>%
           dplyr::select(
             contexte_recherche_id = id,
@@ -136,7 +136,7 @@ get_table_taxon_sql <-
       dplyr::left_join(
         dplyr::tbl(
           conn,
-          dbplyr::in_schema("referentiels", "objectif_recherche")
+          dbplyr::in_schema("oison_referentiels", "objectif_recherche")
         ) %>%
           dplyr::select(
             objectif_recherche_id = id,
@@ -146,14 +146,14 @@ get_table_taxon_sql <-
 
       # join to status part
       dplyr::left_join(
-        dplyr::tbl(conn, dbplyr::in_schema("referentiels", "status")) %>%
+        dplyr::tbl(conn, dbplyr::in_schema("oison_referentiels", "status")) %>%
           dplyr::select(status_id = id,
                         status = label)
       ) %>%
 
       # join to taxon_presence
       dplyr::left_join(
-        dplyr::tbl(conn, dbplyr::in_schema("referentiels", "taxon_presence")) %>%
+        dplyr::tbl(conn, dbplyr::in_schema("oison_referentiels", "taxon_presence")) %>%
           dplyr::select(presence_id = id,
                         presence = label)
       ) %>%
@@ -165,14 +165,14 @@ get_table_taxon_sql <-
 
       # join to recensement_taxon
       dplyr::left_join(
-        dplyr::tbl(conn, dbplyr::in_schema("data", "recensement_taxon")) %>%
+        dplyr::tbl(conn, dbplyr::in_schema("oison_data", "recensement_taxon")) %>%
           dplyr::select(-id) %>%
           dplyr::rename(observation_id = observation_taxon_id) %>%
           # join to taxon_stade_developpement
           dplyr::left_join(
             dplyr::tbl(
               conn,
-              dbplyr::in_schema("referentiels", "taxon_stade_developpement")
+              dbplyr::in_schema("oison_referentiels", "taxon_stade_developpement")
             ) %>%
               dplyr::select(
                 stade_developpement_id = id,
@@ -183,7 +183,7 @@ get_table_taxon_sql <-
           dplyr::left_join(
             dplyr::tbl(
               conn,
-              dbplyr::in_schema("referentiels", "taxon_vivant_trace")
+              dbplyr::in_schema("oison_referentiels", "taxon_vivant_trace")
             ) %>%
               dplyr::select(vivant_trace_id = id,
                             vivant_trace = label)
@@ -193,7 +193,7 @@ get_table_taxon_sql <-
           dplyr::left_join(
             dplyr::tbl(
               conn,
-              dbplyr::in_schema("referentiels", "classe_nombre_individus")
+              dbplyr::in_schema("oison_referentiels", "classe_nombre_individus")
             ) %>%
               dplyr::select(
                 classe_nombre_individus_id = id,
