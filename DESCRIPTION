@@ -1,7 +1,7 @@
 Type: Package
 Package: oisonR
 Title: R Package pour collecter et utiliser les données OISON
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: 
     person("Benoit", "Richard", , "benoit.richard@ofb.gouv.fr", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-4522-027X"))
