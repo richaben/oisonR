@@ -1,0 +1,101 @@
+# 1. Bien démarrer avec le package oisonR
+
+### Pourquoi un package `oisonR` ?
+
+Ce package a été développé pour faciliter l’accès aux données
+bancarisées dans [OISON](https://oison.ofb.fr/), et ainsi permettre leur
+ré-utilisation dans le cadre de projets de valorisation (téléchargement
+des données et mises en formes dans des formats exploitables).
+
+#### Installation et chargement
+
+``` r
+# install.packages("devtools")
+devtools::install_github("richaben/oisonR", build_vignettes = TRUE)
+
+# Chargement
+library(oisonR)
+```
+
+#### Prérequis pour l’utilisation du package
+
+Avec ce package, l’accès aux données [OISON](https://oison.ofb.fr/) peut
+se faire via deux sources possibles :
+
+- par une connexion directe à l’application (via une API) nécessitant un
+  accès `login`/`mot de passe`. Par ce moyen, ce sont les données en
+  temps réel qui peuvent être obtenues ; mais elles sont téléchargées
+  plus lentement (*requête limitée en nombre de lignes*).
+
+- par la base de données SQL. Cela nécessite d’obtenir les paramètres de
+  connexion à la base au préalable, et une connexion au réseau interne
+  de l’OFB (ou au VPN). Par ce moyen, les données accessibles sont
+  datées à J-1 sur une copie de la base (*en lecture seule*). Ici, un
+  volume important de données peut être téléchargé (*plus rapidement que
+  par l’API*).
+
+> 💡 *Certaines fonctions exigent des paramètres particuliers pour
+> l’accès aux données (par exemple login, mot de passe, etc…). Pour ne
+> pas saisir ces paramètres à chaque utilisation, il est conseillé de
+> les stocker directement dans l’environnement `R`* (*cf. procédure
+> ci-dessous*).
+
+Deux fonctions utiles sont disponibles pour vérifier si les informations
+de connexion sont bien sauvegardées et stockées dans l’environnement `R`
+de l’utilisateur:
+
+``` r
+## pour vérifier les éléments de connexion via l'api
+check_acces_oison_api()
+
+## pour vérifier les éléments de connexion via la connexion SQL
+check_acces_oison_sql()
+```
+
+#### Marche à suivre pour stocker des informations dans l’environnement `R`
+
+⚠ *Il faut bien renseigner les informations dans l’environnement* `R`
+*avec le même nom que ci-dessous pour que ces éléments soient
+vérifiables et utilisables par les fonctions* `check_acces_oison_***()`.
+
+1.  Connexion via l’API
+
+``` r
+## 1° - ouvrir le fichier de configuration de l'environnement R avec la fonction :
+usethis::edit_r_environ()
+
+## 2° - dans la fenêtre ouverte intitulée '.Renviron', 
+# sauvegarder les lignes suivantes correspondant aux identifiants
+OISON_ID = "john.doe@ofb.gouv.fr"
+OISON_PASSWORD = "moncodesecret"
+
+## 3° - dans les fonctions, ces informations peuvent être utilisées avec les 
+## lignes suivantes (à la place des 'vrais' identifiants) :
+Sys.getenv('OISON_ID')
+Sys.getenv('OISON_PASSWORD')
+```
+
+2.  Connexion via la base SQL
+
+⚠ *Requiert d’avoir la bonne configuration (les bons paramètres)*
+
+``` r
+## 1° - ouvrir le fichier de configuration de l'environnement R avec la fonction :
+usethis::edit_r_environ()
+
+## 2° - dans la fenêtre ouverte intitulée '.Renviron', 
+# sauvegarder les lignes suivantes avec le bon paramétrage
+OISON_BDname = 'NOM_DE_LA_BDD'
+OISON_BDhostname = "URL_DE_LA_BDD"
+OISON_BDport = "LE_PORT_DE_LA_BDD"
+OISON_BDuid = "IDENTIFIANT_DE_CONNEXION_A_LA_BDD"
+OISON_BDpwd = "MOT_DE_PASSE_DE_CONNEXION_A_LA_BDD"
+
+## 3° - dans les fonctions, ces informations doivent être utilisées avec les
+## lignes suivantes :
+Sys.getenv('OISON_BDname')
+Sys.getenv('OISON_BDhostname')
+Sys.getenv('OISON_BDport')
+Sys.getenv('OISON_BDuid')
+Sys.getenv('OISON_BDpwd')
+```
