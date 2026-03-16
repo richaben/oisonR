@@ -43,12 +43,12 @@ Imports:
     tidyselect
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Suggests: 
     knitr,
     rmarkdown,
     COGiter,
     mapview
-Remotes: 
-  MaelTheuliere/COGiter
+Remotes: MaelTheuliere/COGiter,
+  trafficonese/leaflet.extras
 VignetteBuilder: knitr
